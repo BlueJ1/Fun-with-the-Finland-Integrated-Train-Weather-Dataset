@@ -1,0 +1,20 @@
+{
+  "verified_scenarios": 6,
+  "cohort_rows": 101146,
+  "test_rows": 20230,
+  "candidate_configs_per_scenario": 100,
+  "folds_per_candidate": 5,
+  "matching_environment_verification": true,
+  "checks": [
+    "input hashes",
+    "candidate and fold completeness",
+    "CV-only winner",
+    "split membership",
+    "chronological boundaries",
+    "saved model reload",
+    "literal scale_pos_weight in saved objective",
+    "prediction parity",
+    "metric recomputation",
+    "exported figures"
+  ]
+}

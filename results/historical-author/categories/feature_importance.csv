@@ -1,0 +1,20 @@
+feature,importance
+train_id,0.25211903
+hour_cos,0.18818964
+hour_sin,0.0946077
+weather_scenario_Extreme Cold,0.089932226
+month_cos,0.06880639
+weather_scenario_High Winds,0.040764708
+month_sin,0.03991505
+day_of_month,0.036185756
+trainStopping,0.03386749
+day_week_sin,0.0316526
+weather_scenario_Normal Clear,0.031178204
+day_week_cos,0.027425094
+weather_scenario_Extreme Heat,0.024318028
+weather_scenario_Heavy Rain,0.015020879
+weather_scenario_Freezing Rain,0.013688546
+weather_scenario_Dense Fog,0.0053658327
+weather_scenario_Heavy Snow,0.003951861
+weather_scenario_Blizzard,0.003010979
+weather_scenario_Black Ice,0.0

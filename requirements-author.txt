@@ -1,0 +1,10 @@
+numpy==2.0.1
+pandas==2.2.3
+# Original SciPy 1.15.1 wheel fails dyld validation on macOS 27.
+# 1.17.1 replaces PROPACK's old Fortran binary and loads on this host.
+scipy==1.17.1
+scikit-learn==1.6.1
+xgboost==3.0.1
+pyarrow==19.0.1
+matplotlib==3.10.1
+joblib==1.4.2

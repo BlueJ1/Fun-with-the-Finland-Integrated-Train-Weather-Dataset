@@ -1,0 +1,50 @@
+[
+  {
+    "comparison": "categories minus full",
+    "metric": "mae",
+    "profile": "chronological-author",
+    "difference_minutes": 0.7485188233013789,
+    "daily_block_bootstrap_95pct": [
+      0.5922453512006903,
+      0.9152851769459769
+    ],
+    "test_days": 481,
+    "replicates": 2000
+  },
+  {
+    "comparison": "categories minus full",
+    "metric": "rmse",
+    "profile": "chronological-author",
+    "difference_minutes": 2.735851171656938,
+    "daily_block_bootstrap_95pct": [
+      1.8367356886407726,
+      3.677823158156237
+    ],
+    "test_days": 481,
+    "replicates": 2000
+  },
+  {
+    "comparison": "categories minus instant",
+    "metric": "mae",
+    "profile": "chronological-author",
+    "difference_minutes": 0.20627222762708897,
+    "daily_block_bootstrap_95pct": [
+      0.12109675608025534,
+      0.2894780342707268
+    ],
+    "test_days": 481,
+    "replicates": 2000
+  },
+  {
+    "comparison": "categories minus instant",
+    "metric": "rmse",
+    "profile": "chronological-author",
+    "difference_minutes": 0.3898050273627405,
+    "daily_block_bootstrap_95pct": [
+      0.07367978745932176,
+      0.742307724353343
+    ],
+    "test_days": 481,
+    "replicates": 2000
+  }
+]

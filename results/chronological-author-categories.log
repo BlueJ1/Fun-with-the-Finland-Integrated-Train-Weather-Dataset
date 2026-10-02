@@ -1,0 +1,43 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+categories 1/100 best CV rmse=16.1418; elapsed=21.0s
+categories 5/100 best CV rmse=16.1418; elapsed=93.6s
+categories 10/100 best CV rmse=15.9867; elapsed=150.9s
+categories 15/100 best CV rmse=15.8659; elapsed=165.4s
+categories 20/100 best CV rmse=15.8096; elapsed=177.1s
+categories 25/100 best CV rmse=15.8096; elapsed=194.1s
+categories 30/100 best CV rmse=15.6634; elapsed=209.6s
+categories 35/100 best CV rmse=15.6634; elapsed=219.0s
+categories 40/100 best CV rmse=15.6634; elapsed=233.7s
+categories 45/100 best CV rmse=15.6634; elapsed=244.0s
+categories 50/100 best CV rmse=15.6415; elapsed=258.4s
+categories 55/100 best CV rmse=15.6415; elapsed=276.3s
+categories 60/100 best CV rmse=15.6415; elapsed=288.4s
+categories 65/100 best CV rmse=15.6070; elapsed=301.4s
+categories 70/100 best CV rmse=15.6070; elapsed=348.2s
+categories 75/100 best CV rmse=15.4861; elapsed=364.5s
+categories 80/100 best CV rmse=15.4861; elapsed=377.9s
+categories 85/100 best CV rmse=15.4861; elapsed=390.1s
+categories 90/100 best CV rmse=15.4861; elapsed=405.5s
+categories 95/100 best CV rmse=15.4861; elapsed=419.6s
+categories 100/100 best CV rmse=15.4861; elapsed=433.8s
+{
+  "scenario": "categories",
+  "metrics": {
+    "r2": 0.48133881963241365,
+    "rmse": 17.00452594750244,
+    "mae": 7.116924659736331,
+    "wmape": 73.57733117323063,
+    "wmape_signed_denominator": 84.47128122977534
+  },
+  "best": {
+    "colsample_bytree": 0.7,
+    "learning_rate": 0.01,
+    "max_depth": 8,
+    "n_estimators": 371,
+    "scale_pos_weight": 3.9,
+    "subsample": 0.9
+  }
+}

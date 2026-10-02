@@ -1,0 +1,77 @@
+{
+  "actual_time_present": 101148,
+  "projection_columns": [
+    "trainStopping",
+    "commercialStop",
+    "month",
+    "hour",
+    "day_of_week",
+    "day_of_month",
+    "trainNumber",
+    "Air temperature",
+    "Wind speed",
+    "Gust speed",
+    "Wind direction",
+    "Relative humidity",
+    "Dew-point temperature",
+    "Precipitation intensity",
+    "Snow depth",
+    "Pressure (msl)",
+    "Horizontal visibility",
+    "Cloud amount",
+    "differenceInMinutes",
+    "differenceInMinutes_offset",
+    "differenceInMinutes_eachStation_offset",
+    "cancelled",
+    "actualTime"
+  ],
+  "duplicate_projection_rows": 2,
+  "after_projection_dedup": 101146,
+  "duplicate_records": [
+    {
+      "departureDate": "2021-01-09",
+      "trainNumber": 11942,
+      "type": "ARRIVAL",
+      "actualTime": "2021-01-09T14:28:26.000Z",
+      "scheduledTime": "2021-01-09T14:46:13.000Z",
+      "differenceInMinutes": -18.0,
+      "differenceInMinutes_offset": -16.0,
+      "differenceInMinutes_eachStation_offset": 0.0,
+      "cancelled": false
+    },
+    {
+      "departureDate": "2021-01-09",
+      "trainNumber": 11942,
+      "type": "DEPARTURE",
+      "actualTime": "2021-01-09T14:28:26.000Z",
+      "scheduledTime": "2021-01-09T14:46:13.000Z",
+      "differenceInMinutes": -18.0,
+      "differenceInMinutes_offset": -16.0,
+      "differenceInMinutes_eachStation_offset": 0.0,
+      "cancelled": false
+    },
+    {
+      "departureDate": "2024-08-21",
+      "trainNumber": 10349,
+      "type": "ARRIVAL",
+      "actualTime": "2024-08-21T18:38:28.000Z",
+      "scheduledTime": "2024-08-21T17:40:00.000Z",
+      "differenceInMinutes": 58.0,
+      "differenceInMinutes_offset": 0.0,
+      "differenceInMinutes_eachStation_offset": 0.0,
+      "cancelled": false
+    },
+    {
+      "departureDate": "2024-08-21",
+      "trainNumber": 10349,
+      "type": "DEPARTURE",
+      "actualTime": "2024-08-21T18:38:28.000Z",
+      "scheduledTime": "2024-08-21T17:40:00.000Z",
+      "differenceInMinutes": 58.0,
+      "differenceInMinutes_offset": 0.0,
+      "differenceInMinutes_eachStation_offset": 0.0,
+      "cancelled": false
+    }
+  ],
+  "note": "Deduplicating author retained columns, including actualTime but excluding event type and scheduledTime, explains exactly the paper cohort."
+}

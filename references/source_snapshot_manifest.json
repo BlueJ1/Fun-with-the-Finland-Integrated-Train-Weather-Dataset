@@ -1,0 +1,38 @@
+[
+  {
+    "local_cache": "references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/training_pipeline.py",
+    "upstream_path": "src/training_pipeline.py",
+    "url": "https://github.com/borinvini/Railway-FMI-Data_training/blob/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/src/training_pipeline.py",
+    "sha256": "78ed4c25c2e0cbb3095ce19b7dfb5c775e93a9a189b9ed0278656f2784407313"
+  },
+  {
+    "local_cache": "references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/preprocessing_pipeline.py",
+    "upstream_path": "src/preprocessing_pipeline.py",
+    "url": "https://github.com/borinvini/Railway-FMI-Data_training/blob/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/src/preprocessing_pipeline.py",
+    "sha256": "abde265edd91d13ca42b5a2112a4e1daac1ba2d846c2a5c8a7987aa549d95336"
+  },
+  {
+    "local_cache": "references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/const_training.py",
+    "upstream_path": "config/const_training.py",
+    "url": "https://github.com/borinvini/Railway-FMI-Data_training/blob/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/config/const_training.py",
+    "sha256": "9923587fba2b06d1f15ed145ede6e413af4abb42e718bdeab13a64d1858999b9"
+  },
+  {
+    "local_cache": "references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/const_preprocessing.py",
+    "upstream_path": "config/const_preprocessing.py",
+    "url": "https://github.com/borinvini/Railway-FMI-Data_training/blob/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/config/const_preprocessing.py",
+    "sha256": "1f73d285e7eea313730d5f0b9ea9d40794ae5255c68a1d8b7be406dbee4de862"
+  },
+  {
+    "local_cache": "references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/environment.yml",
+    "upstream_path": "environment.yml",
+    "url": "https://github.com/borinvini/Railway-FMI-Data_training/blob/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/environment.yml",
+    "sha256": "618cc937757b5b58590f497d72dd38348bb7cd801a16156b7b93dc9ce5d46484"
+  },
+  {
+    "local_cache": "references/author/xgboost-v3.0.1/regression_obj.cu",
+    "upstream_path": "src/objective/regression_obj.cu",
+    "url": "https://github.com/dmlc/xgboost/blob/v3.0.1/src/objective/regression_obj.cu",
+    "sha256": "376491937975f3ba372a4dcd86e9f5465205b5f9931e1d57de5ecbe84f3ebabc"
+  }
+]

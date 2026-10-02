@@ -1,0 +1,98 @@
+{
+  "scenario": "categories",
+  "protocol": "chronological",
+  "features": [
+    "trainStopping",
+    "month_sin",
+    "month_cos",
+    "hour_sin",
+    "hour_cos",
+    "day_week_sin",
+    "day_week_cos",
+    "train_id",
+    "weather_scenario_Normal Clear",
+    "weather_scenario_Blizzard",
+    "weather_scenario_Heavy Snow",
+    "weather_scenario_Extreme Cold",
+    "weather_scenario_Heavy Rain",
+    "weather_scenario_Freezing Rain",
+    "weather_scenario_Black Ice",
+    "weather_scenario_Dense Fog",
+    "weather_scenario_High Winds",
+    "weather_scenario_Extreme Heat"
+  ],
+  "feature_count": 18,
+  "rows": 101146,
+  "development_rows": 80916,
+  "test_rows": 20230,
+  "test_metrics": {
+    "r2": 0.48133881963241365,
+    "rmse": 17.00452594750244,
+    "mae": 7.116924659736331,
+    "wmape": 73.57733117323063,
+    "wmape_signed_denominator": 84.47128122977534
+  },
+  "best_candidate": {
+    "candidate": 73,
+    "params": {
+      "colsample_bytree": 0.7,
+      "learning_rate": 0.01,
+      "max_depth": 8,
+      "n_estimators": 371,
+      "scale_pos_weight": 3.9,
+      "subsample": 0.9
+    },
+    "fold_loss": [
+      16.89262678933475,
+      14.896996911047992,
+      16.198592814799916,
+      16.463657004235877,
+      12.978859952401924
+    ],
+    "mean_cv_loss": 15.486146694364091,
+    "fold_rmse": [
+      16.89262678933475,
+      14.896996911047992,
+      16.198592814799916,
+      16.463657004235877,
+      12.978859952401924
+    ],
+    "mean_cv_rmse": 15.486146694364091
+  },
+  "paper_approximate_metrics": {
+    "r2": 0.78,
+    "rmse": 8.5,
+    "mae": 3.7,
+    "wmape": 50.5
+  },
+  "difference_from_paper": {
+    "r2": -0.2986611803675864,
+    "rmse": 8.50452594750244,
+    "mae": 3.416924659736331,
+    "wmape": 23.077331173230633
+  },
+  "baselines": {
+    "development_mean": {
+      "r2": -0.029253579481775427,
+      "rmse": 23.954320179584176,
+      "mae": 9.369223803125628,
+      "wmape": 96.86241116176566,
+      "wmape_signed_denominator": 111.20397877133789
+    },
+    "development_median": {
+      "r2": -0.09889582545686948,
+      "rmse": 24.75146555175997,
+      "mae": 9.055412753336629,
+      "wmape": 93.61811947117474,
+      "wmape_signed_denominator": 107.47933326683994
+    },
+    "zero_delay": {
+      "r2": -0.12732722075669622,
+      "rmse": 25.06961439653794,
+      "mae": 9.672713791398913,
+      "wmape": 100.0,
+      "wmape_signed_denominator": 114.8061228680556
+    }
+  },
+  "test_curve_selection_is_diagnostic_only": true
+}

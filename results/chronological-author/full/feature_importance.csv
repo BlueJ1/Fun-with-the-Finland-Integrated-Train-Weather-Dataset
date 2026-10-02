@@ -1,0 +1,27 @@
+feature,importance
+train_id,0.17341383
+hour_cos,0.1436054
+month_cos,0.0765521
+weather_scenario_High Winds,0.072892696
+hour_sin,0.07279135
+Air temperature,0.054686375
+day_week_sin,0.04067461
+Pressure (msl),0.03594109
+Wind speed,0.03327196
+Snow depth,0.032909825
+weather_scenario_Extreme Cold,0.032229908
+Wind direction,0.032168414
+Relative humidity,0.03198404
+Horizontal visibility,0.028157683
+month_sin,0.024437126
+Precipitation intensity,0.024352133
+day_week_cos,0.021311995
+weather_scenario_Heavy Rain,0.018506335
+weather_scenario_Normal Clear,0.014603771
+trainStopping,0.011387041
+weather_scenario_Extreme Heat,0.010399404
+weather_scenario_Dense Fog,0.008656159
+weather_scenario_Freezing Rain,0.005066727
+weather_scenario_Heavy Snow,0.0
+weather_scenario_Black Ice,0.0
+weather_scenario_Blizzard,0.0

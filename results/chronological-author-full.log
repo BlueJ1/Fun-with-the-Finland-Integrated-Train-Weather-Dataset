@@ -1,0 +1,43 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+full 1/100 best CV rmse=16.2550; elapsed=22.8s
+full 5/100 best CV rmse=16.1313; elapsed=118.8s
+full 10/100 best CV rmse=15.9994; elapsed=157.2s
+full 15/100 best CV rmse=15.8445; elapsed=177.0s
+full 20/100 best CV rmse=15.7474; elapsed=194.2s
+full 25/100 best CV rmse=15.3833; elapsed=217.1s
+full 30/100 best CV rmse=15.3833; elapsed=236.0s
+full 35/100 best CV rmse=15.3833; elapsed=247.7s
+full 40/100 best CV rmse=15.3833; elapsed=268.4s
+full 45/100 best CV rmse=15.3833; elapsed=281.7s
+full 50/100 best CV rmse=15.3833; elapsed=301.2s
+full 55/100 best CV rmse=15.3833; elapsed=359.7s
+full 60/100 best CV rmse=15.3833; elapsed=375.4s
+full 65/100 best CV rmse=15.3833; elapsed=392.5s
+full 70/100 best CV rmse=15.3833; elapsed=411.7s
+full 75/100 best CV rmse=15.3833; elapsed=434.1s
+full 80/100 best CV rmse=15.3833; elapsed=454.2s
+full 85/100 best CV rmse=15.3833; elapsed=470.3s
+full 90/100 best CV rmse=15.3833; elapsed=491.3s
+full 95/100 best CV rmse=15.3833; elapsed=506.4s
+full 100/100 best CV rmse=15.3833; elapsed=520.7s
+{
+  "scenario": "full",
+  "metrics": {
+    "r2": 0.634807403770568,
+    "rmse": 14.268674775845502,
+    "mae": 6.3684058364349525,
+    "wmape": 65.83887390628483,
+    "wmape_signed_denominator": 75.58705847179355
+  },
+  "best": {
+    "colsample_bytree": 0.7,
+    "learning_rate": 0.05,
+    "max_depth": 8,
+    "n_estimators": 330,
+    "scale_pos_weight": 3.9,
+    "subsample": 0.9
+  }
+}

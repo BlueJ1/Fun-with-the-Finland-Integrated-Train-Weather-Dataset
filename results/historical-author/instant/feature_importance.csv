@@ -1,0 +1,19 @@
+feature,importance
+train_id,0.19274317
+hour_cos,0.14331318
+hour_sin,0.077825285
+month_cos,0.0635551
+day_week_sin,0.053512108
+Snow depth,0.051657118
+Air temperature,0.050699938
+Pressure (msl),0.04535888
+month_sin,0.043490622
+Cloud amount,0.039147165
+day_of_month,0.038306918
+Wind speed,0.035086393
+Wind direction,0.031598065
+Relative humidity,0.03142113
+Horizontal visibility,0.030790903
+trainStopping,0.027740108
+day_week_cos,0.02420803
+Precipitation intensity,0.019545924

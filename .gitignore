@@ -1,2 +1,12 @@
 /data_archive/
+/.venv/
+/.venv-author/
+/tmp/
+/data/
+__pycache__/
+*.pyc
 .DS_Store
+/results/parameter_omission_diagnostics/
+/references/paper.txt
+/references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/*.py
+/references/author/xgboost-v3.0.1/

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "desktop",
+    "title": "FI-TW replication results",
+    "tables": 2,
+    "images": [
+      {
+        "complete": true,
+        "width": 1908,
+        "height": 1296
+      },
+      {
+        "complete": true,
+        "width": 1908,
+        "height": 1296
+      }
+    ],
+    "horizontalOverflow": false
+  },
+  {
+    "name": "mobile",
+    "title": "FI-TW replication results",
+    "tables": 2,
+    "images": [
+      {
+        "complete": true,
+        "width": 1908,
+        "height": 1296
+      },
+      {
+        "complete": true,
+        "width": 1908,
+        "height": 1296
+      }
+    ],
+    "horizontalOverflow": false
+  }
+]

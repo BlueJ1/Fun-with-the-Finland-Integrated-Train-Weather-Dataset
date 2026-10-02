@@ -1,0 +1,43 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+full 1/100 best CV mae=6.5857; elapsed=5.2s
+full 5/100 best CV mae=4.6328; elapsed=99.1s
+full 10/100 best CV mae=4.6328; elapsed=208.0s
+full 15/100 best CV mae=4.6311; elapsed=235.4s
+full 20/100 best CV mae=4.6311; elapsed=268.9s
+full 25/100 best CV mae=4.2891; elapsed=293.0s
+full 30/100 best CV mae=4.2891; elapsed=319.4s
+full 35/100 best CV mae=4.2891; elapsed=379.3s
+full 40/100 best CV mae=4.2891; elapsed=402.9s
+full 45/100 best CV mae=4.2137; elapsed=440.0s
+full 50/100 best CV mae=4.2137; elapsed=566.0s
+full 55/100 best CV mae=4.2137; elapsed=693.3s
+full 60/100 best CV mae=4.2137; elapsed=761.3s
+full 65/100 best CV mae=4.2137; elapsed=784.0s
+full 70/100 best CV mae=4.2137; elapsed=839.2s
+full 75/100 best CV mae=4.0065; elapsed=1175.4s
+full 80/100 best CV mae=4.0065; elapsed=1316.5s
+full 85/100 best CV mae=4.0065; elapsed=1511.9s
+full 90/100 best CV mae=4.0065; elapsed=1651.3s
+full 95/100 best CV mae=4.0065; elapsed=1778.0s
+full 100/100 best CV mae=4.0065; elapsed=1871.9s
+{
+  "scenario": "full",
+  "metrics": {
+    "r2": 0.7165310470035239,
+    "rmse": 9.637486173662792,
+    "mae": 3.923665281445457,
+    "wmape": 53.8465573421533,
+    "wmape_signed_denominator": 76.8973471451533
+  },
+  "best": {
+    "colsample_bytree": 0.7,
+    "learning_rate": 0.1,
+    "max_depth": 7,
+    "n_estimators": 361,
+    "scale_pos_weight": 3.9,
+    "subsample": 0.8
+  }
+}

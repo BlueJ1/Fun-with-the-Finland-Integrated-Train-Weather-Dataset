@@ -1,0 +1,20 @@
+{
+  "method": "Monthly files sorted chronologically; trainNumber grouped in first appearance among ALL network rows, using only trainNumber native parquet column. Preserve raw Oulu event order within train groups. No performance-based mapping choice.",
+  "mapping": "references/global_train_order.json",
+  "months": 84,
+  "mapping_train_counts": {
+    "min": 271,
+    "max": 492
+  },
+  "cohort_n": 101146,
+  "test_n": 20230,
+  "test_target_mean": 5.102471576866041,
+  "test_target_mean_absolute": 7.286752347998022,
+  "test_target_std_population": 18.101352183907984,
+  "test_target_max": 739.0,
+  "test_rmse_implied_by_r2_078": 8.490286755751626,
+  "test_wmape_implied_by_mae_37": 50.77707905108846,
+  "train_target_mean": 5.217571308517475,
+  "train_target_mean_absolute": 7.4093504374907315,
+  "train_target_std_population": 18.801100273923556
+}

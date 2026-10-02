@@ -1,0 +1,43 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+instant 1/100 best CV rmse=16.2571; elapsed=22.8s
+instant 5/100 best CV rmse=15.6104; elapsed=114.1s
+instant 10/100 best CV rmse=15.5069; elapsed=155.6s
+instant 15/100 best CV rmse=15.5069; elapsed=174.0s
+instant 20/100 best CV rmse=15.5069; elapsed=189.8s
+instant 25/100 best CV rmse=15.5069; elapsed=211.2s
+instant 30/100 best CV rmse=15.5069; elapsed=228.8s
+instant 35/100 best CV rmse=15.5069; elapsed=239.5s
+instant 40/100 best CV rmse=15.5069; elapsed=258.8s
+instant 45/100 best CV rmse=15.5069; elapsed=270.6s
+instant 50/100 best CV rmse=15.5069; elapsed=288.5s
+instant 55/100 best CV rmse=15.3747; elapsed=345.4s
+instant 60/100 best CV rmse=15.3747; elapsed=360.3s
+instant 65/100 best CV rmse=15.3747; elapsed=376.2s
+instant 70/100 best CV rmse=15.3747; elapsed=393.5s
+instant 75/100 best CV rmse=15.3747; elapsed=413.9s
+instant 80/100 best CV rmse=15.3747; elapsed=431.0s
+instant 85/100 best CV rmse=15.3747; elapsed=448.6s
+instant 90/100 best CV rmse=15.3747; elapsed=468.4s
+instant 95/100 best CV rmse=15.3747; elapsed=483.1s
+instant 100/100 best CV rmse=15.3747; elapsed=499.3s
+{
+  "scenario": "instant",
+  "metrics": {
+    "r2": 0.504845435042939,
+    "rmse": 16.6147209201397,
+    "mae": 6.910652432109242,
+    "wmape": 71.44481456956034,
+    "wmape_signed_denominator": 82.02302159758393
+  },
+  "best": {
+    "colsample_bytree": 0.7,
+    "learning_rate": 0.05,
+    "max_depth": 8,
+    "n_estimators": 145,
+    "scale_pos_weight": 3.9,
+    "subsample": 0.8
+  }
+}

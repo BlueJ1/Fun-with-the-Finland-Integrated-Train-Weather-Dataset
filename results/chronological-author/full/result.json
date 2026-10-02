@@ -1,0 +1,106 @@
+{
+  "scenario": "full",
+  "protocol": "chronological",
+  "features": [
+    "trainStopping",
+    "month_sin",
+    "month_cos",
+    "hour_sin",
+    "hour_cos",
+    "day_week_sin",
+    "day_week_cos",
+    "train_id",
+    "Air temperature",
+    "Wind speed",
+    "Wind direction",
+    "Relative humidity",
+    "Precipitation intensity",
+    "Snow depth",
+    "Pressure (msl)",
+    "Horizontal visibility",
+    "weather_scenario_Normal Clear",
+    "weather_scenario_Blizzard",
+    "weather_scenario_Heavy Snow",
+    "weather_scenario_Extreme Cold",
+    "weather_scenario_Heavy Rain",
+    "weather_scenario_Freezing Rain",
+    "weather_scenario_Black Ice",
+    "weather_scenario_Dense Fog",
+    "weather_scenario_High Winds",
+    "weather_scenario_Extreme Heat"
+  ],
+  "feature_count": 26,
+  "rows": 101146,
+  "development_rows": 80916,
+  "test_rows": 20230,
+  "test_metrics": {
+    "r2": 0.634807403770568,
+    "rmse": 14.268674775845502,
+    "mae": 6.3684058364349525,
+    "wmape": 65.83887390628483,
+    "wmape_signed_denominator": 75.58705847179355
+  },
+  "best_candidate": {
+    "candidate": 24,
+    "params": {
+      "colsample_bytree": 0.7,
+      "learning_rate": 0.05,
+      "max_depth": 8,
+      "n_estimators": 330,
+      "scale_pos_weight": 3.9,
+      "subsample": 0.9
+    },
+    "fold_loss": [
+      16.249394332162332,
+      16.595397752464386,
+      16.50457700190219,
+      15.832716973337599,
+      11.73444651900642
+    ],
+    "mean_cv_loss": 15.383306515774587,
+    "fold_rmse": [
+      16.249394332162332,
+      16.595397752464386,
+      16.50457700190219,
+      15.832716973337599,
+      11.73444651900642
+    ],
+    "mean_cv_rmse": 15.383306515774587
+  },
+  "paper_approximate_metrics": {
+    "r2": 0.7,
+    "rmse": 9.9,
+    "mae": 4.1,
+    "wmape": 56.5
+  },
+  "difference_from_paper": {
+    "r2": -0.06519259622943196,
+    "rmse": 4.368674775845502,
+    "mae": 2.268405836434953,
+    "wmape": 9.338873906284832
+  },
+  "baselines": {
+    "development_mean": {
+      "r2": -0.029253579481775427,
+      "rmse": 23.954320179584176,
+      "mae": 9.369223803125628,
+      "wmape": 96.86241116176566,
+      "wmape_signed_denominator": 111.20397877133789
+    },
+    "development_median": {
+      "r2": -0.09889582545686948,
+      "rmse": 24.75146555175997,
+      "mae": 9.055412753336629,
+      "wmape": 93.61811947117474,
+      "wmape_signed_denominator": 107.47933326683994
+    },
+    "zero_delay": {
+      "r2": -0.12732722075669622,
+      "rmse": 25.06961439653794,
+      "mae": 9.672713791398913,
+      "wmape": 100.0,
+      "wmape_signed_denominator": 114.8061228680556
+    }
+  },
+  "test_curve_selection_is_diagnostic_only": true
+}

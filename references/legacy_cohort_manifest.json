@@ -1,0 +1,9 @@
+{
+  "rows": 101146,
+  "rules": "author-legacy",
+  "timestamp": "actualTime UTC",
+  "row_order": "sorted source month, full-network trainNumber first appearance, native order within group",
+  "ordering_is_approximate": true,
+  "deduplication": "same timestamp-aware projection as primary for matched cohort",
+  "sha256": "2616a563d3e84706b4e0420b70e272bb875f9c5c535f70053f4c934fc000f958"
+}

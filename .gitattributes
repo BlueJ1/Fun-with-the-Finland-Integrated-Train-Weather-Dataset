@@ -1,0 +1,3 @@
+results/**/split_membership.csv linguist-generated=true
+results/figures/*.svg linguist-generated=true
+references/author/training_commits_page*.json linguist-generated=true

@@ -1,0 +1,1463 @@
+{
+  "input_files": 84,
+  "all_network_rows": 41672120,
+  "selected_raw_rows": 102217,
+  "target_present": 101452,
+  "target_missing": 765,
+  "target_present_noncancelled": 101137,
+  "cancelled_counts": {
+    "false": 101501,
+    "true": 716
+  },
+  "stop_cancelled_counts": {
+    "false": 101144,
+    "true": 1073
+  },
+  "types": {
+    "ARRIVAL": 51239,
+    "DEPARTURE": 50978
+  },
+  "scheduled_time_range": [
+    "2018-01-01 04:54:00+00:00",
+    "2025-01-01 06:26:00+00:00"
+  ],
+  "actual_time_range": [
+    "2018-01-01 04:55:55+00:00",
+    "2025-01-01 06:29:38+00:00"
+  ],
+  "missingness": {
+    "trainNumber": 0,
+    "departureDate": 0,
+    "operatorUICCode": 0,
+    "operatorShortCode": 0,
+    "trainType": 0,
+    "trainCategory": 0,
+    "commuterLineID": 102217,
+    "runningCurrently": 0,
+    "cancelled": 0,
+    "version": 0,
+    "timetableType": 0,
+    "timetableAcceptanceDate": 0,
+    "stationName": 0,
+    "stationShortCode": 0,
+    "stationUICCode": 0,
+    "countryCode": 0,
+    "type": 0,
+    "trainStopping": 0,
+    "commercialStop": 76,
+    "stop_cancelled": 0,
+    "scheduledTime": 0,
+    "actualTime": 1069,
+    "differenceInMinutes": 765,
+    "differenceInMinutes_offset": 765,
+    "differenceInMinutes_eachStation_offset": 765,
+    "causes": 0,
+    "commercialTrack": 1097,
+    "trainReady": 69303,
+    "closest_ems": 83904,
+    "Air temperature": 0,
+    "Wind speed": 0,
+    "Gust speed": 0,
+    "Wind direction": 0,
+    "Relative humidity": 0,
+    "Dew-point temperature": 0,
+    "Precipitation amount": 89409,
+    "Precipitation intensity": 0,
+    "Snow depth": 14,
+    "Pressure (msl)": 0,
+    "Horizontal visibility": 29,
+    "Cloud amount": 20248,
+    "Present weather (auto)": 29,
+    "Air temperature (12h max)": 0,
+    "Air temperature (12h min)": 0,
+    "Air temperature (12h mean)": 0,
+    "Air temperature (24h max)": 0,
+    "Air temperature (24h min)": 0,
+    "Air temperature (24h mean)": 0,
+    "Air temperature (72h max)": 0,
+    "Air temperature (72h min)": 0,
+    "Air temperature (72h mean)": 0,
+    "Wind speed (12h max)": 0,
+    "Wind speed (12h min)": 0,
+    "Wind speed (12h mean)": 0,
+    "Wind speed (24h max)": 0,
+    "Wind speed (24h min)": 0,
+    "Wind speed (24h mean)": 0,
+    "Wind speed (72h max)": 0,
+    "Wind speed (72h min)": 0,
+    "Wind speed (72h mean)": 0,
+    "Relative humidity (12h max)": 0,
+    "Relative humidity (12h min)": 0,
+    "Relative humidity (12h mean)": 0,
+    "Relative humidity (24h max)": 0,
+    "Relative humidity (24h min)": 0,
+    "Relative humidity (24h mean)": 0,
+    "Relative humidity (72h max)": 0,
+    "Relative humidity (72h min)": 0,
+    "Relative humidity (72h mean)": 0,
+    "Precipitation intensity (12h max)": 0,
+    "Precipitation intensity (12h min)": 0,
+    "Precipitation intensity (12h mean)": 0,
+    "Precipitation intensity (24h max)": 0,
+    "Precipitation intensity (24h min)": 0,
+    "Precipitation intensity (24h mean)": 0,
+    "Precipitation intensity (72h max)": 0,
+    "Precipitation intensity (72h min)": 0,
+    "Precipitation intensity (72h mean)": 0,
+    "Snow depth (12h max)": 0,
+    "Snow depth (12h min)": 0,
+    "Snow depth (12h mean)": 0,
+    "Snow depth (24h max)": 0,
+    "Snow depth (24h min)": 0,
+    "Snow depth (24h mean)": 0,
+    "Snow depth (72h max)": 0,
+    "Snow depth (72h min)": 0,
+    "Snow depth (72h mean)": 0,
+    "Pressure (msl) (12h max)": 0,
+    "Pressure (msl) (12h min)": 0,
+    "Pressure (msl) (12h mean)": 0,
+    "Pressure (msl) (24h max)": 0,
+    "Pressure (msl) (24h min)": 0,
+    "Pressure (msl) (24h mean)": 0,
+    "Pressure (msl) (72h max)": 0,
+    "Pressure (msl) (72h min)": 0,
+    "Pressure (msl) (72h mean)": 0,
+    "Horizontal visibility (12h max)": 0,
+    "Horizontal visibility (12h min)": 0,
+    "Horizontal visibility (12h mean)": 0,
+    "Horizontal visibility (24h max)": 0,
+    "Horizontal visibility (24h min)": 0,
+    "Horizontal visibility (24h mean)": 0,
+    "Horizontal visibility (72h max)": 0,
+    "Horizontal visibility (72h min)": 0,
+    "Horizontal visibility (72h mean)": 0,
+    "Cloud amount (12h max)": 20162,
+    "Cloud amount (12h min)": 20162,
+    "Cloud amount (12h mean)": 20162,
+    "Cloud amount (24h max)": 20162,
+    "Cloud amount (24h min)": 20162,
+    "Cloud amount (24h mean)": 20162,
+    "Cloud amount (72h max)": 20162,
+    "Cloud amount (72h min)": 20162,
+    "Cloud amount (72h mean)": 20162,
+    "Precipitation amount (12h mean)": 0,
+    "Precipitation amount (12h cumulative)": 0,
+    "Precipitation amount (24h mean)": 0,
+    "Precipitation amount (24h cumulative)": 0,
+    "Precipitation amount (72h mean)": 0,
+    "Precipitation amount (72h cumulative)": 0,
+    "estimateSource": 92358,
+    "liveEstimateTime": 92360,
+    "source_file": 0,
+    "unknownDelay": 102215
+  },
+  "train_number_unique": 344,
+  "train_number_range": [
+    20,
+    69053
+  ],
+  "unique_service_runs": 76006,
+  "duplicate_event_keys": 0,
+  "closest_ems_counts": {
+    "NaN": 83904,
+    "Oulu Kaukovainio": 18313
+  },
+  "train_stopping_counts": {
+    "true": 102141,
+    "false": 76
+  },
+  "commercial_stop_counts": {
+    "true": 102131,
+    "null": 76,
+    "false": 10
+  },
+  "negative_delays": 20302,
+  "target_stats": {
+    "count": 101452.0,
+    "mean": 5.282320703386823,
+    "std": 19.492603596268207,
+    "min": -183.0,
+    "1%": -16.0,
+    "25%": 0.0,
+    "50%": 1.0,
+    "75%": 5.0,
+    "90%": 16.0,
+    "95%": 27.0,
+    "99%": 75.0,
+    "max": 963.0
+  },
+  "months": [
+    {
+      "file": "matched_data_flat_2018_01.parquet",
+      "all_rows": 518206,
+      "oulu_long_distance_rows": 1198,
+      "target_present": 1198,
+      "noncancelled_target_present": 1198
+    },
+    {
+      "file": "matched_data_flat_2018_02.parquet",
+      "all_rows": 473896,
+      "oulu_long_distance_rows": 1137,
+      "target_present": 1137,
+      "noncancelled_target_present": 1136
+    },
+    {
+      "file": "matched_data_flat_2018_03.parquet",
+      "all_rows": 524240,
+      "oulu_long_distance_rows": 1275,
+      "target_present": 1275,
+      "noncancelled_target_present": 1275
+    },
+    {
+      "file": "matched_data_flat_2018_04.parquet",
+      "all_rows": 500556,
+      "oulu_long_distance_rows": 1198,
+      "target_present": 1197,
+      "noncancelled_target_present": 1197
+    },
+    {
+      "file": "matched_data_flat_2018_05.parquet",
+      "all_rows": 507470,
+      "oulu_long_distance_rows": 1080,
+      "target_present": 1076,
+      "noncancelled_target_present": 1074
+    },
+    {
+      "file": "matched_data_flat_2018_06.parquet",
+      "all_rows": 485206,
+      "oulu_long_distance_rows": 1087,
+      "target_present": 1073,
+      "noncancelled_target_present": 1051
+    },
+    {
+      "file": "matched_data_flat_2018_07.parquet",
+      "all_rows": 522144,
+      "oulu_long_distance_rows": 1181,
+      "target_present": 1180,
+      "noncancelled_target_present": 1179
+    },
+    {
+      "file": "matched_data_flat_2018_08.parquet",
+      "all_rows": 524874,
+      "oulu_long_distance_rows": 1196,
+      "target_present": 1194,
+      "noncancelled_target_present": 1189
+    },
+    {
+      "file": "matched_data_flat_2018_09.parquet",
+      "all_rows": 498140,
+      "oulu_long_distance_rows": 1034,
+      "target_present": 1034,
+      "noncancelled_target_present": 1032
+    },
+    {
+      "file": "matched_data_flat_2018_10.parquet",
+      "all_rows": 526372,
+      "oulu_long_distance_rows": 1146,
+      "target_present": 1146,
+      "noncancelled_target_present": 1145
+    },
+    {
+      "file": "matched_data_flat_2018_11.parquet",
+      "all_rows": 502716,
+      "oulu_long_distance_rows": 1099,
+      "target_present": 1095,
+      "noncancelled_target_present": 1095
+    },
+    {
+      "file": "matched_data_flat_2018_12.parquet",
+      "all_rows": 513658,
+      "oulu_long_distance_rows": 1244,
+      "target_present": 1242,
+      "noncancelled_target_present": 1242
+    },
+    {
+      "file": "matched_data_flat_2019_01.parquet",
+      "all_rows": 552866,
+      "oulu_long_distance_rows": 1284,
+      "target_present": 1275,
+      "noncancelled_target_present": 1264
+    },
+    {
+      "file": "matched_data_flat_2019_02.parquet",
+      "all_rows": 504782,
+      "oulu_long_distance_rows": 1190,
+      "target_present": 1184,
+      "noncancelled_target_present": 1178
+    },
+    {
+      "file": "matched_data_flat_2019_03.parquet",
+      "all_rows": 552334,
+      "oulu_long_distance_rows": 1325,
+      "target_present": 1323,
+      "noncancelled_target_present": 1323
+    },
+    {
+      "file": "matched_data_flat_2019_04.parquet",
+      "all_rows": 535126,
+      "oulu_long_distance_rows": 1269,
+      "target_present": 1269,
+      "noncancelled_target_present": 1268
+    },
+    {
+      "file": "matched_data_flat_2019_05.parquet",
+      "all_rows": 545602,
+      "oulu_long_distance_rows": 1219,
+      "target_present": 1218,
+      "noncancelled_target_present": 1214
+    },
+    {
+      "file": "matched_data_flat_2019_06.parquet",
+      "all_rows": 509692,
+      "oulu_long_distance_rows": 1186,
+      "target_present": 1186,
+      "noncancelled_target_present": 1186
+    },
+    {
+      "file": "matched_data_flat_2019_07.parquet",
+      "all_rows": 548446,
+      "oulu_long_distance_rows": 1209,
+      "target_present": 1207,
+      "noncancelled_target_present": 1206
+    },
+    {
+      "file": "matched_data_flat_2019_08.parquet",
+      "all_rows": 541898,
+      "oulu_long_distance_rows": 1224,
+      "target_present": 1222,
+      "noncancelled_target_present": 1222
+    },
+    {
+      "file": "matched_data_flat_2019_09.parquet",
+      "all_rows": 527776,
+      "oulu_long_distance_rows": 1140,
+      "target_present": 1139,
+      "noncancelled_target_present": 1137
+    },
+    {
+      "file": "matched_data_flat_2019_10.parquet",
+      "all_rows": 551806,
+      "oulu_long_distance_rows": 1239,
+      "target_present": 1238,
+      "noncancelled_target_present": 1237
+    },
+    {
+      "file": "matched_data_flat_2019_11.parquet",
+      "all_rows": 525540,
+      "oulu_long_distance_rows": 1156,
+      "target_present": 1156,
+      "noncancelled_target_present": 1155
+    },
+    {
+      "file": "matched_data_flat_2019_12.parquet",
+      "all_rows": 550384,
+      "oulu_long_distance_rows": 1280,
+      "target_present": 1278,
+      "noncancelled_target_present": 1277
+    },
+    {
+      "file": "matched_data_flat_2020_01.parquet",
+      "all_rows": 587338,
+      "oulu_long_distance_rows": 1347,
+      "target_present": 1347,
+      "noncancelled_target_present": 1346
+    },
+    {
+      "file": "matched_data_flat_2020_02.parquet",
+      "all_rows": 551608,
+      "oulu_long_distance_rows": 1273,
+      "target_present": 1271,
+      "noncancelled_target_present": 1269
+    },
+    {
+      "file": "matched_data_flat_2020_03.parquet",
+      "all_rows": 587114,
+      "oulu_long_distance_rows": 1357,
+      "target_present": 1325,
+      "noncancelled_target_present": 1318
+    },
+    {
+      "file": "matched_data_flat_2020_04.parquet",
+      "all_rows": 466792,
+      "oulu_long_distance_rows": 1082,
+      "target_present": 968,
+      "noncancelled_target_present": 962
+    },
+    {
+      "file": "matched_data_flat_2020_05.parquet",
+      "all_rows": 343736,
+      "oulu_long_distance_rows": 686,
+      "target_present": 659,
+      "noncancelled_target_present": 630
+    },
+    {
+      "file": "matched_data_flat_2020_06.parquet",
+      "all_rows": 385516,
+      "oulu_long_distance_rows": 863,
+      "target_present": 849,
+      "noncancelled_target_present": 834
+    },
+    {
+      "file": "matched_data_flat_2020_07.parquet",
+      "all_rows": 453904,
+      "oulu_long_distance_rows": 1116,
+      "target_present": 1116,
+      "noncancelled_target_present": 1113
+    },
+    {
+      "file": "matched_data_flat_2020_08.parquet",
+      "all_rows": 488002,
+      "oulu_long_distance_rows": 1098,
+      "target_present": 1096,
+      "noncancelled_target_present": 1095
+    },
+    {
+      "file": "matched_data_flat_2020_09.parquet",
+      "all_rows": 477594,
+      "oulu_long_distance_rows": 1010,
+      "target_present": 1010,
+      "noncancelled_target_present": 1007
+    },
+    {
+      "file": "matched_data_flat_2020_10.parquet",
+      "all_rows": 482040,
+      "oulu_long_distance_rows": 1136,
+      "target_present": 1132,
+      "noncancelled_target_present": 1127
+    },
+    {
+      "file": "matched_data_flat_2020_11.parquet",
+      "all_rows": 460532,
+      "oulu_long_distance_rows": 1077,
+      "target_present": 1071,
+      "noncancelled_target_present": 1069
+    },
+    {
+      "file": "matched_data_flat_2020_12.parquet",
+      "all_rows": 492474,
+      "oulu_long_distance_rows": 1259,
+      "target_present": 1259,
+      "noncancelled_target_present": 1258
+    },
+    {
+      "file": "matched_data_flat_2021_01.parquet",
+      "all_rows": 471122,
+      "oulu_long_distance_rows": 1289,
+      "target_present": 1285,
+      "noncancelled_target_present": 1270
+    },
+    {
+      "file": "matched_data_flat_2021_02.parquet",
+      "all_rows": 407662,
+      "oulu_long_distance_rows": 1141,
+      "target_present": 1136,
+      "noncancelled_target_present": 1135
+    },
+    {
+      "file": "matched_data_flat_2021_03.parquet",
+      "all_rows": 451104,
+      "oulu_long_distance_rows": 1283,
+      "target_present": 1281,
+      "noncancelled_target_present": 1281
+    },
+    {
+      "file": "matched_data_flat_2021_04.parquet",
+      "all_rows": 420202,
+      "oulu_long_distance_rows": 1188,
+      "target_present": 1182,
+      "noncancelled_target_present": 1180
+    },
+    {
+      "file": "matched_data_flat_2021_05.parquet",
+      "all_rows": 422074,
+      "oulu_long_distance_rows": 1126,
+      "target_present": 1086,
+      "noncancelled_target_present": 1084
+    },
+    {
+      "file": "matched_data_flat_2021_06.parquet",
+      "all_rows": 425014,
+      "oulu_long_distance_rows": 1114,
+      "target_present": 1109,
+      "noncancelled_target_present": 1099
+    },
+    {
+      "file": "matched_data_flat_2021_07.parquet",
+      "all_rows": 475904,
+      "oulu_long_distance_rows": 1214,
+      "target_present": 1214,
+      "noncancelled_target_present": 1213
+    },
+    {
+      "file": "matched_data_flat_2021_08.parquet",
+      "all_rows": 472132,
+      "oulu_long_distance_rows": 1177,
+      "target_present": 1170,
+      "noncancelled_target_present": 1161
+    },
+    {
+      "file": "matched_data_flat_2021_09.parquet",
+      "all_rows": 473504,
+      "oulu_long_distance_rows": 1142,
+      "target_present": 1140,
+      "noncancelled_target_present": 1139
+    },
+    {
+      "file": "matched_data_flat_2021_10.parquet",
+      "all_rows": 490270,
+      "oulu_long_distance_rows": 1221,
+      "target_present": 1215,
+      "noncancelled_target_present": 1215
+    },
+    {
+      "file": "matched_data_flat_2021_11.parquet",
+      "all_rows": 476288,
+      "oulu_long_distance_rows": 1183,
+      "target_present": 1182,
+      "noncancelled_target_present": 1180
+    },
+    {
+      "file": "matched_data_flat_2021_12.parquet",
+      "all_rows": 504274,
+      "oulu_long_distance_rows": 1302,
+      "target_present": 1299,
+      "noncancelled_target_present": 1292
+    },
+    {
+      "file": "matched_data_flat_2022_01.parquet",
+      "all_rows": 483166,
+      "oulu_long_distance_rows": 1348,
+      "target_present": 1345,
+      "noncancelled_target_present": 1342
+    },
+    {
+      "file": "matched_data_flat_2022_02.parquet",
+      "all_rows": 413096,
+      "oulu_long_distance_rows": 1207,
+      "target_present": 1206,
+      "noncancelled_target_present": 1199
+    },
+    {
+      "file": "matched_data_flat_2022_03.parquet",
+      "all_rows": 487490,
+      "oulu_long_distance_rows": 1352,
+      "target_present": 1342,
+      "noncancelled_target_present": 1337
+    },
+    {
+      "file": "matched_data_flat_2022_04.parquet",
+      "all_rows": 470756,
+      "oulu_long_distance_rows": 1289,
+      "target_present": 1287,
+      "noncancelled_target_present": 1287
+    },
+    {
+      "file": "matched_data_flat_2022_05.parquet",
+      "all_rows": 477922,
+      "oulu_long_distance_rows": 1203,
+      "target_present": 1199,
+      "noncancelled_target_present": 1199
+    },
+    {
+      "file": "matched_data_flat_2022_06.parquet",
+      "all_rows": 449454,
+      "oulu_long_distance_rows": 1111,
+      "target_present": 1107,
+      "noncancelled_target_present": 1096
+    },
+    {
+      "file": "matched_data_flat_2022_07.parquet",
+      "all_rows": 485462,
+      "oulu_long_distance_rows": 1198,
+      "target_present": 1194,
+      "noncancelled_target_present": 1180
+    },
+    {
+      "file": "matched_data_flat_2022_08.parquet",
+      "all_rows": 483154,
+      "oulu_long_distance_rows": 1206,
+      "target_present": 1204,
+      "noncancelled_target_present": 1199
+    },
+    {
+      "file": "matched_data_flat_2022_09.parquet",
+      "all_rows": 474028,
+      "oulu_long_distance_rows": 1191,
+      "target_present": 1190,
+      "noncancelled_target_present": 1179
+    },
+    {
+      "file": "matched_data_flat_2022_10.parquet",
+      "all_rows": 485258,
+      "oulu_long_distance_rows": 1236,
+      "target_present": 1236,
+      "noncancelled_target_present": 1236
+    },
+    {
+      "file": "matched_data_flat_2022_11.parquet",
+      "all_rows": 466694,
+      "oulu_long_distance_rows": 1150,
+      "target_present": 1149,
+      "noncancelled_target_present": 1142
+    },
+    {
+      "file": "matched_data_flat_2022_12.parquet",
+      "all_rows": 496908,
+      "oulu_long_distance_rows": 1369,
+      "target_present": 1363,
+      "noncancelled_target_present": 1357
+    },
+    {
+      "file": "matched_data_flat_2023_01.parquet",
+      "all_rows": 507486,
+      "oulu_long_distance_rows": 1385,
+      "target_present": 1385,
+      "noncancelled_target_present": 1379
+    },
+    {
+      "file": "matched_data_flat_2023_02.parquet",
+      "all_rows": 463182,
+      "oulu_long_distance_rows": 1269,
+      "target_present": 1269,
+      "noncancelled_target_present": 1267
+    },
+    {
+      "file": "matched_data_flat_2023_03.parquet",
+      "all_rows": 522254,
+      "oulu_long_distance_rows": 1402,
+      "target_present": 1205,
+      "noncancelled_target_present": 1201
+    },
+    {
+      "file": "matched_data_flat_2023_04.parquet",
+      "all_rows": 488724,
+      "oulu_long_distance_rows": 1253,
+      "target_present": 1252,
+      "noncancelled_target_present": 1252
+    },
+    {
+      "file": "matched_data_flat_2023_05.parquet",
+      "all_rows": 494134,
+      "oulu_long_distance_rows": 1200,
+      "target_present": 1200,
+      "noncancelled_target_present": 1200
+    },
+    {
+      "file": "matched_data_flat_2023_06.parquet",
+      "all_rows": 479210,
+      "oulu_long_distance_rows": 1197,
+      "target_present": 1196,
+      "noncancelled_target_present": 1191
+    },
+    {
+      "file": "matched_data_flat_2023_07.parquet",
+      "all_rows": 512964,
+      "oulu_long_distance_rows": 1332,
+      "target_present": 1330,
+      "noncancelled_target_present": 1321
+    },
+    {
+      "file": "matched_data_flat_2023_08.parquet",
+      "all_rows": 509542,
+      "oulu_long_distance_rows": 1266,
+      "target_present": 1266,
+      "noncancelled_target_present": 1266
+    },
+    {
+      "file": "matched_data_flat_2023_09.parquet",
+      "all_rows": 492620,
+      "oulu_long_distance_rows": 1194,
+      "target_present": 1194,
+      "noncancelled_target_present": 1194
+    },
+    {
+      "file": "matched_data_flat_2023_10.parquet",
+      "all_rows": 505890,
+      "oulu_long_distance_rows": 1266,
+      "target_present": 1264,
+      "noncancelled_target_present": 1261
+    },
+    {
+      "file": "matched_data_flat_2023_11.parquet",
+      "all_rows": 503340,
+      "oulu_long_distance_rows": 1296,
+      "target_present": 1294,
+      "noncancelled_target_present": 1291
+    },
+    {
+      "file": "matched_data_flat_2023_12.parquet",
+      "all_rows": 518724,
+      "oulu_long_distance_rows": 1389,
+      "target_present": 1349,
+      "noncancelled_target_present": 1347
+    },
+    {
+      "file": "matched_data_flat_2024_01.parquet",
+      "all_rows": 542978,
+      "oulu_long_distance_rows": 1416,
+      "target_present": 1416,
+      "noncancelled_target_present": 1411
+    },
+    {
+      "file": "matched_data_flat_2024_02.parquet",
+      "all_rows": 506176,
+      "oulu_long_distance_rows": 1344,
+      "target_present": 1210,
+      "noncancelled_target_present": 1206
+    },
+    {
+      "file": "matched_data_flat_2024_03.parquet",
+      "all_rows": 535222,
+      "oulu_long_distance_rows": 1488,
+      "target_present": 1488,
+      "noncancelled_target_present": 1486
+    },
+    {
+      "file": "matched_data_flat_2024_04.parquet",
+      "all_rows": 518174,
+      "oulu_long_distance_rows": 1328,
+      "target_present": 1328,
+      "noncancelled_target_present": 1328
+    },
+    {
+      "file": "matched_data_flat_2024_05.parquet",
+      "all_rows": 515164,
+      "oulu_long_distance_rows": 1258,
+      "target_present": 1258,
+      "noncancelled_target_present": 1256
+    },
+    {
+      "file": "matched_data_flat_2024_06.parquet",
+      "all_rows": 495040,
+      "oulu_long_distance_rows": 1193,
+      "target_present": 1193,
+      "noncancelled_target_present": 1193
+    },
+    {
+      "file": "matched_data_flat_2024_07.parquet",
+      "all_rows": 496022,
+      "oulu_long_distance_rows": 1271,
+      "target_present": 1271,
+      "noncancelled_target_present": 1271
+    },
+    {
+      "file": "matched_data_flat_2024_08.parquet",
+      "all_rows": 505178,
+      "oulu_long_distance_rows": 1131,
+      "target_present": 1130,
+      "noncancelled_target_present": 1129
+    },
+    {
+      "file": "matched_data_flat_2024_09.parquet",
+      "all_rows": 503456,
+      "oulu_long_distance_rows": 1224,
+      "target_present": 1221,
+      "noncancelled_target_present": 1218
+    },
+    {
+      "file": "matched_data_flat_2024_10.parquet",
+      "all_rows": 527844,
+      "oulu_long_distance_rows": 1271,
+      "target_present": 1271,
+      "noncancelled_target_present": 1271
+    },
+    {
+      "file": "matched_data_flat_2024_11.parquet",
+      "all_rows": 515548,
+      "oulu_long_distance_rows": 1324,
+      "target_present": 1323,
+      "noncancelled_target_present": 1319
+    },
+    {
+      "file": "matched_data_flat_2024_12.parquet",
+      "all_rows": 529930,
+      "oulu_long_distance_rows": 1380,
+      "target_present": 1373,
+      "noncancelled_target_present": 1369
+    }
+  ],
+  "schema_consistent": false,
+  "trains_sample": [
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 22,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T06:37:00.000Z",
+      "actualTime": "2018-01-01T06:38:04.000Z",
+      "differenceInMinutes": 1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 23,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T12:54:00.000Z",
+      "actualTime": "2018-01-01T12:55:56.000Z",
+      "differenceInMinutes": 2.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 24,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T09:38:00.000Z",
+      "actualTime": "2018-01-01T09:34:18.000Z",
+      "differenceInMinutes": -4.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 24,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T09:55:00.000Z",
+      "actualTime": "2018-01-01T09:56:05.000Z",
+      "differenceInMinutes": 1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 25,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T16:20:00.000Z",
+      "actualTime": "2018-01-01T16:18:36.000Z",
+      "differenceInMinutes": -1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 26,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T12:34:00.000Z",
+      "actualTime": "2018-01-01T12:41:51.000Z",
+      "differenceInMinutes": 8.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 27,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T18:48:00.000Z",
+      "actualTime": "2018-01-01T18:54:05.000Z",
+      "differenceInMinutes": 6.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 27,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T18:53:00.000Z",
+      "actualTime": "2018-01-01T18:58:54.000Z",
+      "differenceInMinutes": 6.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 28,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T15:57:00.000Z",
+      "actualTime": "2018-01-01T15:58:18.000Z",
+      "differenceInMinutes": 1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 29,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T22:05:00.000Z",
+      "actualTime": "2018-01-01T22:03:41.000Z",
+      "differenceInMinutes": -1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 56,
+      "trainType": "S",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T14:04:00.000Z",
+      "actualTime": "2018-01-01T14:04:34.000Z",
+      "differenceInMinutes": 1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 65,
+      "trainType": "IC",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T17:59:00.000Z",
+      "actualTime": "2018-01-01T17:54:59.000Z",
+      "differenceInMinutes": -4.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 70,
+      "trainType": "IC",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T10:47:00.000Z",
+      "actualTime": "2018-01-01T11:00:30.000Z",
+      "differenceInMinutes": 14.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 262,
+      "trainType": "PYO",
+      "type": "ARRIVAL",
+      "scheduledTime": "2018-01-01T17:22:00.000Z",
+      "actualTime": "2018-01-01T17:23:03.000Z",
+      "differenceInMinutes": 1.0
+    },
+    {
+      "departureDate": "2018-01-01",
+      "trainNumber": 262,
+      "trainType": "PYO",
+      "type": "DEPARTURE",
+      "scheduledTime": "2018-01-01T17:59:00.000Z",
+      "actualTime": "2018-01-01T18:02:00.000Z",
+      "differenceInMinutes": 3.0
+    }
+  ],
+  "canonical_schema": [
+    "trainNumber",
+    "departureDate",
+    "operatorUICCode",
+    "operatorShortCode",
+    "trainType",
+    "trainCategory",
+    "commuterLineID",
+    "runningCurrently",
+    "cancelled",
+    "version",
+    "timetableType",
+    "timetableAcceptanceDate",
+    "stationName",
+    "stationShortCode",
+    "stationUICCode",
+    "countryCode",
+    "type",
+    "trainStopping",
+    "commercialStop",
+    "stop_cancelled",
+    "scheduledTime",
+    "actualTime",
+    "differenceInMinutes",
+    "differenceInMinutes_offset",
+    "differenceInMinutes_eachStation_offset",
+    "causes",
+    "commercialTrack",
+    "trainReady",
+    "closest_ems",
+    "Air temperature",
+    "Wind speed",
+    "Gust speed",
+    "Wind direction",
+    "Relative humidity",
+    "Dew-point temperature",
+    "Precipitation amount",
+    "Precipitation intensity",
+    "Snow depth",
+    "Pressure (msl)",
+    "Horizontal visibility",
+    "Cloud amount",
+    "Present weather (auto)",
+    "Air temperature (12h max)",
+    "Air temperature (12h min)",
+    "Air temperature (12h mean)",
+    "Air temperature (24h max)",
+    "Air temperature (24h min)",
+    "Air temperature (24h mean)",
+    "Air temperature (72h max)",
+    "Air temperature (72h min)",
+    "Air temperature (72h mean)",
+    "Wind speed (12h max)",
+    "Wind speed (12h min)",
+    "Wind speed (12h mean)",
+    "Wind speed (24h max)",
+    "Wind speed (24h min)",
+    "Wind speed (24h mean)",
+    "Wind speed (72h max)",
+    "Wind speed (72h min)",
+    "Wind speed (72h mean)",
+    "Relative humidity (12h max)",
+    "Relative humidity (12h min)",
+    "Relative humidity (12h mean)",
+    "Relative humidity (24h max)",
+    "Relative humidity (24h min)",
+    "Relative humidity (24h mean)",
+    "Relative humidity (72h max)",
+    "Relative humidity (72h min)",
+    "Relative humidity (72h mean)",
+    "Precipitation intensity (12h max)",
+    "Precipitation intensity (12h min)",
+    "Precipitation intensity (12h mean)",
+    "Precipitation intensity (24h max)",
+    "Precipitation intensity (24h min)",
+    "Precipitation intensity (24h mean)",
+    "Precipitation intensity (72h max)",
+    "Precipitation intensity (72h min)",
+    "Precipitation intensity (72h mean)",
+    "Snow depth (12h max)",
+    "Snow depth (12h min)",
+    "Snow depth (12h mean)",
+    "Snow depth (24h max)",
+    "Snow depth (24h min)",
+    "Snow depth (24h mean)",
+    "Snow depth (72h max)",
+    "Snow depth (72h min)",
+    "Snow depth (72h mean)",
+    "Pressure (msl) (12h max)",
+    "Pressure (msl) (12h min)",
+    "Pressure (msl) (12h mean)",
+    "Pressure (msl) (24h max)",
+    "Pressure (msl) (24h min)",
+    "Pressure (msl) (24h mean)",
+    "Pressure (msl) (72h max)",
+    "Pressure (msl) (72h min)",
+    "Pressure (msl) (72h mean)",
+    "Horizontal visibility (12h max)",
+    "Horizontal visibility (12h min)",
+    "Horizontal visibility (12h mean)",
+    "Horizontal visibility (24h max)",
+    "Horizontal visibility (24h min)",
+    "Horizontal visibility (24h mean)",
+    "Horizontal visibility (72h max)",
+    "Horizontal visibility (72h min)",
+    "Horizontal visibility (72h mean)",
+    "Cloud amount (12h max)",
+    "Cloud amount (12h min)",
+    "Cloud amount (12h mean)",
+    "Cloud amount (24h max)",
+    "Cloud amount (24h min)",
+    "Cloud amount (24h mean)",
+    "Cloud amount (72h max)",
+    "Cloud amount (72h min)",
+    "Cloud amount (72h mean)",
+    "Precipitation amount (12h mean)",
+    "Precipitation amount (12h cumulative)",
+    "Precipitation amount (24h mean)",
+    "Precipitation amount (24h cumulative)",
+    "Precipitation amount (72h mean)",
+    "Precipitation amount (72h cumulative)",
+    "estimateSource",
+    "liveEstimateTime"
+  ],
+  "schema_variants": {
+    "matched_data_flat_2018_10.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2018_11.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_01.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_02.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_03.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_04.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_05.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_07.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_09.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_10.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2019_12.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_01.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_02.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_03.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_04.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_05.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_06.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_07.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2020_08.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_09.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2020_10.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2020_11.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2020_12.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_01.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_02.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_03.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_04.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_05.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_06.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_07.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2021_08.parquet": {
+      "added": [
+        "unknownDelay"
+      ],
+      "removed": [],
+      "order_only": false
+    },
+    "matched_data_flat_2021_09.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2021_10.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2021_11.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2021_12.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_01.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_02.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_03.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_04.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_05.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_06.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_07.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_08.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_09.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_10.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_11.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2022_12.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_01.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_02.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_03.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_04.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_05.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_06.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_07.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_08.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_09.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_10.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_11.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2023_12.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_01.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_02.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_03.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_04.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_05.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_06.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_07.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_08.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_09.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_10.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_11.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    },
+    "matched_data_flat_2024_12.parquet": {
+      "added": [],
+      "removed": [],
+      "order_only": true
+    }
+  },
+  "actual_time_present_and_valid": 101148,
+  "target_missing_among_valid_actual_time": 0,
+  "paper_claimed_rows": 101146,
+  "actual_time_cleaned_minus_paper": 2,
+  "actual_time_present_not_cancelled": 101147,
+  "actual_time_present_not_stop_cancelled": 101123,
+  "target_present_but_actual_time_missing": 304,
+  "unknownDelay_nonmissing_rows": 2,
+  "author_projection_duplicate_rows": 2,
+  "author_projection_cleaned_rows": 101146,
+  "actual_time_cleaned_minus_paper_explained": true
+}

@@ -1,4 +1,45 @@
-# FI-TW three-scenario replication
+# FI-TW delay modeling
+
+## Current model with thirty-minute-old inputs
+
+The rebuilt model achieves **8.977 minutes mean chronological CV RMSE** using input snapshots more than 30 minutes old at the scheduled prediction time. It uses only the original 80,916 development events; the holdout is unused for this rebuild. Fold RMSE values are 9.413, 7.445, 8.309, 10.464, and 9.252. All 49 tests pass, and saved fold models reproduce every CV prediction exactly.
+
+The age cutoff applies to observed history, station context, pending status, timetable acceptance, and training-label availability. Nine events with too-recent timetable metadata remain in the cohort with masked predictors. The selected prediction recipe combines XGBoost with CV-tuned rules for missing reports and prolonged unresolved delays. This is a selected CV score; no new holdout score is reported.
+
+```sh
+.venv/bin/python -m fitw.stale prepare --archive data_archive
+.venv/bin/python -m fitw.stale train --search-profile calibrated
+.venv/bin/python -m fitw.stale verify
+```
+
+Read [the thirty-minute model report](results/stale30-development/REPORT.md) for the age audit, search scope, inference helper, limitations, and full reproduction commands. Existing experiments below remain available.
+
+## Earlier operational model
+
+`fitw.operational` adds a model for signed Oulu event delay using scheduled event metadata and earlier observations from the same dated train run. It keeps the original chronological 80/20 cohort membership and all 20,230 test events. A separate development search compares direct XGBoost prediction with XGBoost corrections to the last observed delay, using five expanding folds. The selected model is frozen before the separate holdout evaluation.
+
+The new model achieves **10.473 RMSE minutes**, with MAE 3.557 and R² 0.803. The original full-weather chronological model scored 14.269 RMSE. This was the second holdout evaluation during feature development; the first operational version scored 12.285. Each version selected its configuration using development validation only. All 33 tests pass, and the saved model reload reproduces every prediction exactly.
+
+Every history observation must have `actualTime` strictly before the Oulu event's scheduled prediction cutoff and `scheduledTime` strictly before the Oulu event's scheduled time. Training labels must also precede the earliest prediction cutoff in each validation or test block. Missing history stays in the evaluation. The model uses scheduled temporal encodings and equal regression weights, without focal actual-time encodings, target offsets, focal weather, or final cancellation flags.
+
+This is an online operational prediction setting. Earlier completed events from the test period can supply history to later predictions. It requires a train-observation feed and assumes that observations are available at their recorded actual time. The default cutoff is the Oulu event's scheduled time; `--horizon-minutes` moves it earlier. It is not a forecast before the train begins its journey.
+
+Some Oulu events occur early, so a scheduled-time cutoff can fall after their actual occurrence. The focal event remains excluded from history. The benchmark measures delay estimation at the scheduled cutoff and does not establish that every prediction precedes the physical Oulu event.
+
+Run in the main environment with the same archive and prepared cohort as the study:
+
+```sh
+.venv/bin/python -m fitw.operational prepare
+.venv/bin/python -m fitw.operational train
+.venv/bin/python -m fitw.operational evaluate
+.venv/bin/python -m fitw.operational verify
+```
+
+`prepare` also accepts `--archive` and `--cohort`. The other commands accept `--data` and `--output`; `verify` accepts `--cohort` and optional `--archive` to check all monthly source hashes. Training defaults to three concurrent candidates with two CPU threads each; `--workers 1` reduces concurrency. Use a distinct input filename and output directory for different prediction horizons. Searches checkpoint after each candidate and reject configuration mismatches. No additional dependencies are required.
+
+Measured performance, saved model, predictions, source hashes, split membership, and independent verification are in [results/operational-chronological](results/operational-chronological). See [the operational model report](results/operational-chronological/REPORT.md) for the measured comparison and limitations.
+
+## Three-scenario replication
 
 This project runs the three XGBoost experiments in *Predicting Train Delays in Finland Using Machine Learning and Weather Data*, arXiv:2609.11277. The target is signed `differenceInMinutes` at Oulu station, not a final-arrival forecast before departure.
 

@@ -1,0 +1,10 @@
+{
+  "development_only": true,
+  "baseline_model_candidates": 16,
+  "final_model_candidates": 12,
+  "final_postprocess_combinations": 720,
+  "additional_exploratory_transform_combinations": 624,
+  "pending_residual_candidates": 1,
+  "source_data_sha256": "62f5f86525da3c50835c909da737e1a4e748e0521e7f396d62c70eb22355a3c7",
+  "selected_search_reproducible_with": "fitw.stale train --search-profile calibrated"
+}

@@ -1,0 +1,24 @@
+{
+  "candidate": 9,
+  "configuration": {
+    "mode": "residual",
+    "parameters": {
+      "n_estimators": 300,
+      "max_depth": 3,
+      "learning_rate": 0.05,
+      "min_child_weight": 20,
+      "reg_lambda": 10,
+      "subsample": 0.9,
+      "colsample_bytree": 1.0,
+      "scale_pos_weight": 1.0
+    }
+  },
+  "fold_rmse": [
+    10.242547358070594,
+    12.018403431403922,
+    9.488968179326209,
+    11.38513379680533,
+    9.531118275570034
+  ],
+  "mean_cv_rmse": 10.533234208235218
+}

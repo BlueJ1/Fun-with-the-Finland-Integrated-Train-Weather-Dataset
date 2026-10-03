@@ -5,6 +5,7 @@
 /data/
 __pycache__/
 *.pyc
+/results/*/.cv_cache/
 .DS_Store
 /results/parameter_omission_diagnostics/
 /references/paper.txt

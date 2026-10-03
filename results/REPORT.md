@@ -1,5 +1,9 @@
 # FI-TW replication results
 
+The current model uses thirty-minute-old input snapshots and achieves 8.977 mean chronological CV RMSE using development data only. Its [separate report](stale30-development/REPORT.md) documents the age checks, selected prediction recipe, and verification. The holdout was not used for this rebuild.
+
+The new operational model achieves 10.473 RMSE on the same chronological test rows using earlier train observations and timetable context. Its separate [model report](operational-chronological/REPORT.md) documents the added inputs, verification, and two holdout evaluations during development. The replication findings below retain their original scope.
+
 The reported results were not reproduced under the paper's stated chronological evaluation. The paper's category-only advantage also does not hold in the primary chronological run.
 
 The recovered public-code procedure gives much closer results: RMSE 9.64, 9.40, 8.40 minutes for full weather, instant weather, and weather categories. It uses random splitting, shuffled cross-validation, and different tuning choices. Exact numerical reproduction and paper-run identity remain unverified.

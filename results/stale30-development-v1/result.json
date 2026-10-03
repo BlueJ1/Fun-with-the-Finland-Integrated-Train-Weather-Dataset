@@ -1,0 +1,42 @@
+{
+  "model": "stale-30-minute-operational-xgboost",
+  "mean_cv_rmse": 10.533234208235218,
+  "fold_rmse": [
+    10.242547358070594,
+    12.018403431403922,
+    9.488968179326209,
+    11.38513379680533,
+    9.531118275570034
+  ],
+  "target_rmse": 9.0,
+  "target_met": false,
+  "development_rows": 80916,
+  "minimum_input_age_minutes": 30.0,
+  "holdout_used": false,
+  "model_sha256": "08ccf72dc8cab0f6dfae3ce912c423323f87f696767815e4d5421774124c6e2d",
+  "selection": {
+    "candidate": 9,
+    "configuration": {
+      "mode": "residual",
+      "parameters": {
+        "n_estimators": 300,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 20,
+        "reg_lambda": 10,
+        "subsample": 0.9,
+        "colsample_bytree": 1.0,
+        "scale_pos_weight": 1.0
+      }
+    },
+    "fold_rmse": [
+      10.242547358070594,
+      12.018403431403922,
+      9.488968179326209,
+      11.38513379680533,
+      9.531118275570034
+    ],
+    "mean_cv_rmse": 10.533234208235218
+  },
+  "deployment_not_before": "2023-09-09 13:16:00+00:00"
+}

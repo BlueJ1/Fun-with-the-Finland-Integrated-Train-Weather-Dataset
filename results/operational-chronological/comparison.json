@@ -1,0 +1,32 @@
+{
+  "original_full_weather": {
+    "r2": 0.634807403770568,
+    "rmse": 14.268674775845502,
+    "mae": 6.3684058364349525,
+    "wmape": 65.83887390628483,
+    "wmape_signed_denominator": 75.58705847179355
+  },
+  "history_v1": {
+    "r2": 0.72930765602366,
+    "rmse": 12.284589351844218,
+    "mae": 4.282333342819059,
+    "wmape": 44.272304910199644,
+    "wmape_signed_denominator": 50.827316771724014
+  },
+  "context_residual_model": {
+    "r2": 0.8032518471536559,
+    "rmse": 10.473166043837148,
+    "mae": 3.557214850289549,
+    "wmape": 36.77576869329748,
+    "wmape_signed_denominator": 42.22083419169903
+  },
+  "persistence": {
+    "r2": 0.6021734423614509,
+    "rmse": 14.892566329660632,
+    "mae": 4.667721206129511,
+    "wmape": 48.25658348621978,
+    "wmape_signed_denominator": 55.40151252911531
+  },
+  "all_test_row_ids_and_labels_match_original": true,
+  "holdout_evaluations_in_feature_development": 2
+}

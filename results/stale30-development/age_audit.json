@@ -1,0 +1,12 @@
+{
+  "development_rows": 80916,
+  "validation_predictions": 67430,
+  "minimum_input_ages_minutes": {
+    "input_latest_actual_time": 30.016666666666666,
+    "input_latest_timetable_time": 34.083333333333336,
+    "focal_timetable_available_time": 32.45
+  },
+  "metadata_masked_rows": 9,
+  "cohort_row_filter": "row_id < 80916",
+  "holdout_used": false
+}

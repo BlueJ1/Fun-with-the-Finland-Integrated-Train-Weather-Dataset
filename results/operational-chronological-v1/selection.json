@@ -1,0 +1,24 @@
+{
+  "candidate": 1,
+  "params": {
+    "mode": "direct",
+    "parameters": {
+      "n_estimators": 300,
+      "max_depth": 3,
+      "learning_rate": 0.05,
+      "min_child_weight": 20,
+      "reg_lambda": 10,
+      "subsample": 0.9,
+      "colsample_bytree": 1.0,
+      "scale_pos_weight": 1.0
+    }
+  },
+  "fold_rmse": [
+    9.966445446948976,
+    7.780674766875407,
+    8.560633669372367,
+    10.679905122402602,
+    9.626516304417356
+  ],
+  "mean_cv_rmse": 9.32283506200334
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "prediction_rows": 20230,
+  "rmse": 12.284589351844218,
+  "cohort_and_test_membership_unchanged": true,
+  "reload_predictions_exact": true,
+  "metrics_recomputed": true,
+  "history_cutoffs_and_dated_runs_checked": true,
+  "training_label_cutoffs_checked": true,
+  "complete_development_search_checked": true,
+  "features_sha256": "b03fd348691623a4932cef47a17d7090eebefb690deb62575c1e3ed1d4efa390",
+  "model_sha256": "f4cf116baea1b88893ec7b332f250524c133069e2f414276d449460e9351bba8"
+}

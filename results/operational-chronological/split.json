@@ -1,0 +1,117 @@
+{
+  "protocol": "chronological",
+  "development": {
+    "rows": 80916,
+    "first_time": "2018-01-01 04:55:55+00:00",
+    "last_time": "2023-09-09 12:46:00+00:00",
+    "target_mean": 4.386833259182362,
+    "target_std": 17.1101978389908,
+    "mean_absolute_target": 6.812830589747392
+  },
+  "test": {
+    "rows": 20230,
+    "first_time": "2023-09-09 12:55:36+00:00",
+    "last_time": "2025-01-01 06:29:38+00:00",
+    "target_mean": 8.425259515570934,
+    "target_std": 23.61144993613022,
+    "mean_absolute_target": 9.672713791398913
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "train": {
+        "rows": 13486,
+        "first_time": "2018-01-01 04:55:55+00:00",
+        "last_time": "2018-12-23 21:20:30+00:00",
+        "target_mean": 4.847693904790153,
+        "target_std": 15.277567239270798,
+        "mean_absolute_target": 7.174254782737654
+      },
+      "validation": {
+        "rows": 13486,
+        "first_time": "2018-12-23 21:36:11+00:00",
+        "last_time": "2019-11-25 12:29:33+00:00",
+        "target_mean": 5.982796974640368,
+        "target_std": 20.20695241900487,
+        "mean_absolute_target": 8.894260714815363
+      }
+    },
+    {
+      "fold": 2,
+      "train": {
+        "rows": 26972,
+        "first_time": "2018-01-01 04:55:55+00:00",
+        "last_time": "2019-11-25 12:29:33+00:00",
+        "target_mean": 5.41524543971526,
+        "target_std": 17.92162403779243,
+        "mean_absolute_target": 8.03425774877651
+      },
+      "validation": {
+        "rows": 13486,
+        "first_time": "2019-11-25 12:37:55+00:00",
+        "last_time": "2020-12-06 16:02:03+00:00",
+        "target_mean": 3.4586979089426073,
+        "target_std": 13.016549359370199,
+        "mean_absolute_target": 5.78258935192051
+      }
+    },
+    {
+      "fold": 3,
+      "train": {
+        "rows": 40458,
+        "first_time": "2018-01-01 04:55:55+00:00",
+        "last_time": "2020-12-06 16:02:03+00:00",
+        "target_mean": 4.76306292945771,
+        "target_std": 16.475758209047562,
+        "mean_absolute_target": 7.283701616491176
+      },
+      "validation": {
+        "rows": 13486,
+        "first_time": "2020-12-06 16:08:30+00:00",
+        "last_time": "2021-11-17 17:57:39+00:00",
+        "target_mean": 3.5953581491917546,
+        "target_std": 17.66940813361022,
+        "mean_absolute_target": 6.0636956844134655
+      }
+    },
+    {
+      "fold": 4,
+      "train": {
+        "rows": 53944,
+        "first_time": "2018-01-01 04:55:55+00:00",
+        "last_time": "2021-11-17 17:57:39+00:00",
+        "target_mean": 4.47113673439122,
+        "target_std": 16.789747320325265,
+        "mean_absolute_target": 6.978700133471748
+      },
+      "validation": {
+        "rows": 13486,
+        "first_time": "2021-11-17 18:02:21+00:00",
+        "last_time": "2022-10-17 01:49:25+00:00",
+        "target_mean": 4.371348064659647,
+        "target_std": 19.44998241323481,
+        "mean_absolute_target": 6.648672697612339
+      }
+    },
+    {
+      "fold": 5,
+      "train": {
+        "rows": 67430,
+        "first_time": "2018-01-01 04:55:55+00:00",
+        "last_time": "2022-10-17 01:49:25+00:00",
+        "target_mean": 4.451179000444906,
+        "target_std": 17.35449361070214,
+        "mean_absolute_target": 6.912694646299866
+      },
+      "validation": {
+        "rows": 13486,
+        "first_time": "2022-10-17 02:22:07+00:00",
+        "last_time": "2023-09-09 12:46:00+00:00",
+        "target_mean": 4.065104552869642,
+        "target_std": 15.828353258768505,
+        "mean_absolute_target": 6.313510306985021
+      }
+    }
+  ],
+  "dated_runs_shared_by_development_and_test": 0
+}

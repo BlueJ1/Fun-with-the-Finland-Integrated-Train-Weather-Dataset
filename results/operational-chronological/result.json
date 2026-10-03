@@ -1,0 +1,64 @@
+{
+  "model": "operational-history-xgboost",
+  "test_metrics": {
+    "r2": 0.8032518471536559,
+    "rmse": 10.473166043837148,
+    "mae": 3.557214850289549,
+    "wmape": 36.77576869329748,
+    "wmape_signed_denominator": 42.22083419169903
+  },
+  "persistence_metrics": {
+    "r2": 0.6021734423614509,
+    "rmse": 14.892566329660632,
+    "mae": 4.667721206129511,
+    "wmape": 48.25658348621978,
+    "wmape_signed_denominator": 55.40151252911531
+  },
+  "development_rows": 80916,
+  "test_rows": 20230,
+  "selection": {
+    "candidate": 9,
+    "params": {
+      "mode": "residual",
+      "parameters": {
+        "n_estimators": 300,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 20,
+        "reg_lambda": 10,
+        "subsample": 0.9,
+        "colsample_bytree": 1.0,
+        "scale_pos_weight": 1.0
+      }
+    },
+    "fold_rmse": [
+      8.929928106360883,
+      7.72821396254597,
+      8.892911524894215,
+      10.025481678270012,
+      8.680115394676363
+    ],
+    "mean_cv_rmse": 8.851330133349489
+  },
+  "final_training_rows": 80915,
+  "test_history_coverage": 0.770489372219476,
+  "rmse_target": 12.0,
+  "rmse_target_met": true,
+  "model_sha256": "1debad56ac745f5bd00ae3a508c56070150abea1860fcae2e8b3231a8237a131",
+  "by_event_type": {
+    "ARRIVAL": {
+      "r2": 0.852421102491634,
+      "rmse": 9.655388317658744,
+      "mae": 3.0341898485250476,
+      "wmape": 25.76191743926841,
+      "wmape_signed_denominator": 32.49648354563661
+    },
+    "DEPARTURE": {
+      "r2": 0.7375701449737622,
+      "rmse": 11.236499618496513,
+      "mae": 4.08376784532059,
+      "wmape": 54.065169081339626,
+      "wmape_signed_denominator": 54.39663810242445
+    }
+  }
+}

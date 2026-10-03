@@ -1,0 +1,47 @@
+[
+  {
+    "fold": 1,
+    "train_rows": 13484,
+    "validation_rows": 13486,
+    "train_latest_label_time": "2018-12-23 20:47:53+00:00",
+    "validation_earliest_snapshot": "2018-12-23 20:56:00+00:00",
+    "first_validation_row_id": 13486,
+    "last_validation_row_id": 26971
+  },
+  {
+    "fold": 2,
+    "train_rows": 26971,
+    "validation_rows": 13486,
+    "train_latest_label_time": "2019-11-25 10:53:54+00:00",
+    "validation_earliest_snapshot": "2019-11-25 12:04:00+00:00",
+    "first_validation_row_id": 26972,
+    "last_validation_row_id": 40457
+  },
+  {
+    "fold": 3,
+    "train_rows": 40455,
+    "validation_rows": 13486,
+    "train_latest_label_time": "2020-12-06 14:31:13+00:00",
+    "validation_earliest_snapshot": "2020-12-06 15:38:00+00:00",
+    "first_validation_row_id": 40458,
+    "last_validation_row_id": 53943
+  },
+  {
+    "fold": 4,
+    "train_rows": 53943,
+    "validation_rows": 13486,
+    "train_latest_label_time": "2021-11-17 16:13:40+00:00",
+    "validation_earliest_snapshot": "2021-11-17 17:26:00+00:00",
+    "first_validation_row_id": 53944,
+    "last_validation_row_id": 67429
+  },
+  {
+    "fold": 5,
+    "train_rows": 67430,
+    "validation_rows": 13486,
+    "train_latest_label_time": "2022-10-17 01:49:25+00:00",
+    "validation_earliest_snapshot": "2022-10-17 01:51:00+00:00",
+    "first_validation_row_id": 67430,
+    "last_validation_row_id": 80915
+  }
+]

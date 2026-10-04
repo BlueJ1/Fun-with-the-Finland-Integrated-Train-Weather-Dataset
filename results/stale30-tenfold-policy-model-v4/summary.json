@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "mean_cv_rmse": 7.999978167823421,
+  "fold_rmse": [
+    8.363944354087305,
+    9.674143992734608,
+    7.558654344316568,
+    7.268535166897552,
+    7.091410541666226,
+    6.178373321681835,
+    8.73414282702277,
+    8.299821811569187,
+    7.247131925582696,
+    9.583623392675458
+  ],
+  "folds": 10,
+  "holdout_used": false,
+  "unique_native_sources": 25,
+  "fold_models_reloaded": 260,
+  "cv_prediction_rows": 73560,
+  "training_label_age_and_prediction_ties_checked": true,
+  "all_frozen_data_model_hashes_checked": true,
+  "prediction_tolerance": 1e-10,
+  "limitation": "All policy, mixture, gate and affine choices reuse development CV labels. This is native reproduction, not independent validation. actualTime and archived acceptance are availability proxies; FMI publication/revision availability is uncertified.",
+  "development_rows": 80916,
+  "minimum_input_age_minutes": 30,
+  "artifacts_stored_locally": true,
+  "tests_passed": 140,
+  "compact_recipe_replay_checked": true
+}

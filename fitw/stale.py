@@ -14,7 +14,7 @@ import xgboost
 from xgboost import XGBRegressor
 
 from .experiment import metrics
-from .operational import FEATURES, candidates, estimator, history_features, purge_training, scheduled_features
+from .operational import FEATURES, candidates, history_features, purge_training, scheduled_features
 from .prepare import sha256
 from .spec import TARGET
 
@@ -30,6 +30,16 @@ SERVICE_FEATURES = ["service_mean_delay_28d", "service_median_delay_28d", "servi
                     "service_p90_delay_28d", "service_last_delay", "service_last_age_minutes",
                     "service_observed_runs_28d", "service_history_coverage_28d",
                     "service_mean_pending_28d", "service_mean_previous_age_28d"]
+
+
+def estimator(params, jobs):
+    settings = dict(params)
+    objective = settings.pop("objective", "reg:squarederror")
+    seed = settings.pop("random_state", 42)
+    if isinstance(seed, bool) or not isinstance(seed, (int, np.integer)) or not 0 <= seed < 2**32:
+        raise ValueError("A reproducible integer random_state is required")
+    return XGBRegressor(**settings, objective=objective, tree_method="hist",
+                        n_jobs=jobs, random_state=int(seed))
 
 
 def add_service_history(frame):
@@ -75,7 +85,7 @@ def augment(args):
     output = Path(args.output)
     frame.to_parquet(output, index=False)
     manifest = json.loads(Path(args.data).with_suffix(".manifest.json").read_text())
-    manifest.update(features=MODEL_FEATURES + SERVICE_FEATURES, features_sha256=sha256(output),
+    manifest.update(features=manifest["features"] + SERVICE_FEATURES, features_sha256=sha256(output),
                     service_history_policy="same train number and event type; different dated runs; last28days; actual and prediction times strictly before snapshot")
     output.with_suffix(".manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"Saved age-gated service histories for {len(frame)} development rows", flush=True)
@@ -131,6 +141,14 @@ def snapshot_features(targets, schedules, observed):
 
 
 def prepare(args):
+    feature_profile = getattr(args, "feature_profile", "base")
+    enriched = feature_profile == "enriched"
+    if feature_profile == "network":
+        from .stale_network import snapshot_features as builder, NETWORK_FEATURES as ENRICHED_FEATURES
+    elif enriched:
+        from .stale_enriched import snapshot_features as builder, ENRICHED_FEATURES
+    else:
+        builder, ENRICHED_FEATURES = snapshot_features, MODEL_FEATURES
     cohort = development_cohort(args.cohort)
     if len(cohort) != DEVELOPMENT_ROWS:
         raise ValueError("Frozen development cohort is incomplete")
@@ -146,13 +164,13 @@ def prepare(args):
         schedules = pq.read_table(path, columns=STATIC_COLUMNS, filters=common).to_pandas().drop_duplicates(KEY)
         observed = pq.read_table(path, columns=KEY + ["actualTime", TARGET],
                                  filters=common + [("actualTime", "<", timestamp)]).to_pandas()
-        part = snapshot_features(targets, schedules, observed)
+        part = builder(targets, schedules, observed)
         metadata = targets[["row_id", "event_time", "scheduledTime", "departureDate", "trainNumber", "type", TARGET]].copy()
         chunks.append(pd.concat([metadata, part], axis=1))
         sources.append({"file": name, "sha256": sha256(path), "observed_rows": len(observed),
                         "observation_read_before": timestamp})
         print(f"stale snapshot {name}: {len(targets)} development events", flush=True)
-    frame = pd.concat(chunks).sort_values("row_id").reset_index(drop=True)
+    frame = pd.concat(chunks).sort_values("row_id").reset_index(drop=True).copy()
     # Only the predictor uses masked train identity; original query identity
     # remains available for source provenance validation.
     frame["query_train_number"] = frame.trainNumber
@@ -161,7 +179,8 @@ def prepare(args):
     output.parent.mkdir(parents=True, exist_ok=True)
     frame.to_parquet(output, index=False)
     manifest = {"rows": len(frame), "development_row_id_upper_exclusive": DEVELOPMENT_ROWS,
-                "minimum_input_age_minutes": MINIMUM_AGE_MINUTES, "features": MODEL_FEATURES,
+                "minimum_input_age_minutes": MINIMUM_AGE_MINUTES, "features": ENRICHED_FEATURES,
+                "feature_profile": feature_profile,
                 "holdout_read": False, "sources": sources, "features_sha256": sha256(output),
                 "prediction_time": "scheduledTime", "snapshot_time": "scheduledTime minus 30 minutes",
                 "timetable_policy": "acceptance strictly before snapshot; unknown or recent metadata masked",
@@ -172,12 +191,41 @@ def prepare(args):
     print(json.dumps({k: v for k, v in manifest.items() if k != "sources"}, indent=2))
 
 
+def validate_additional_provenance(frame, manifest, cutoff):
+    """Require timestamps for additional histories declared by their builder."""
+    declared = manifest.get("additional_provenance_columns", [])
+    count_mapping = manifest.get("provenance_count_columns", {})
+    lag_mapping = manifest.get("additional_provenance_lag_minutes", {})
+    undeclared = (set(count_mapping) | set(lag_mapping))-set(declared)
+    if undeclared:
+        raise ValueError(f"Presence counts refer to undeclared timestamp provenance: {sorted(undeclared)}")
+    for name in declared:
+        if name not in frame:
+            raise ValueError(f"Missing additional timestamp provenance: {name}")
+        values = pd.to_datetime(frame[name], utc=True)
+        present = values.notna()
+        lag = float(lag_mapping.get(name, 0.))
+        if not np.isfinite(lag) or lag < 0:
+            raise ValueError(f"Invalid additional availability lag for {name}")
+        deadline = cutoff-pd.Timedelta(minutes=lag)
+        if not (values[present] < deadline[present]).all():
+            raise ValueError(f"Input age violation in {name}")
+        count_names = count_mapping.get(name, [])
+        if count_names:
+            missing = set(count_names)-set(frame.columns)
+            if missing:
+                raise ValueError(f"Missing provenance presence counts: {sorted(missing)}")
+            used = frame[count_names].gt(0).any(axis=1)
+            if values[used].isna().any():
+                raise ValueError(f"Present observations require timestamp provenance: {name}")
+
+
 def load_data(path):
-    frame = pd.read_parquet(path).sort_values("row_id").reset_index(drop=True)
+    frame = pd.read_parquet(path).sort_values(["prediction_time", "row_id"], kind="stable").reset_index(drop=True)
     if frame.row_id.duplicated().any() or (frame.row_id >= DEVELOPMENT_ROWS).any() or (frame.row_id < 0).any():
         raise ValueError("Development-only data must exclude every holdout row")
-    if not pd.to_datetime(frame.event_time, utc=True).is_monotonic_increasing:
-        raise ValueError("Development event order must be chronological")
+    if not pd.to_datetime(frame.prediction_time, utc=True).is_monotonic_increasing:
+        raise ValueError("Development prediction order must be chronological")
     prediction = pd.to_datetime(frame.prediction_time, utc=True)
     cutoff = pd.to_datetime(frame.observation_cutoff, utc=True)
     if not (prediction == pd.to_datetime(frame.scheduledTime, utc=True)).all():
@@ -186,7 +234,12 @@ def load_data(path):
         raise ValueError("Snapshot is less than 30 minutes old")
     if not (pd.to_datetime(frame.prediction_cutoff, utc=True) == cutoff).all():
         raise ValueError("History cutoff disagrees with old-data snapshot")
-    for name in ["source_actual_time", "input_latest_actual_time", "input_latest_timetable_time", "focal_timetable_available_time"]:
+    manifest_path = Path(path).with_suffix(".manifest.json")
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    validate_additional_provenance(frame, manifest, cutoff)
+    for name in ["source_actual_time", "input_latest_actual_time", "input_latest_timetable_time", "focal_timetable_available_time", "enriched_input_latest_actual_time", "enriched_input_latest_timetable_time", "network_input_latest_actual_time", "network_input_latest_timetable_time"]:
+        if name.startswith(("enriched_", "network_")) and name not in frame:
+            continue
         values = pd.to_datetime(frame[name], utc=True)
         present = values.notna()
         if not (values[present] < cutoff[present]).all():
@@ -208,11 +261,20 @@ def load_data(path):
     return frame
 
 
-def folds_for(frame):
+def folds_for(frame, n_splits=10):
     indices = np.arange(len(frame))
     folds = []
-    for tr, va in TimeSeriesSplit(n_splits=5).split(indices):
-        retained = purge_training(frame, tr, va)
+    times = pd.to_datetime(frame.prediction_time, utc=True).astype("int64").to_numpy()
+    if np.any(times[1:] < times[:-1]):
+        raise ValueError("Folds require chronological prediction times")
+    for tr, va in TimeSeriesSplit(n_splits=n_splits).split(indices):
+        # Keep simultaneous predictions in one block, before fitting any labels.
+        begin = int(np.searchsorted(times, times[va[0]], side="left"))
+        end = int(np.searchsorted(times, times[va[-1] + 1], side="left")) if va[-1] + 1 < len(frame) else len(frame)
+        va = indices[begin:end]
+        if not len(va):
+            raise ValueError("Too few distinct prediction times for requested folds")
+        retained = purge_training(frame, indices[:begin], va)
         folds.append((retained, va))
     return folds
 
@@ -224,6 +286,44 @@ def calibrated_candidates():
              "learning_rate": rate, "min_child_weight": child, "reg_lambda": regularization,
              "subsample": .9, "colsample_bytree": 1., "scale_pos_weight": 1.}}
             for mode in ["residual", "direct"] for depth, child, regularization, trees, rate in settings]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def fit_estimator(choice, matrix, labels, jobs):
+    return estimator(choice["parameters"], jobs).fit(matrix, labels)
+
+
+def prediction_baseline(frame, choice):
+    result = frame.previous_delay.fillna(0).to_numpy(dtype=np.float32).copy()
+    if choice["mode"] == "pending_residual":
+        rule = choice["baseline"]
+        pending = frame.oldest_pending_minutes.to_numpy()
+        eligible = (frame.history_count.to_numpy() > 0) & (pending > rule["threshold"])
+        result[eligible] = np.maximum(result[eligible], pending[eligible] * rule["multiplier"])
+    return result
 
 
 def apply_postprocess(frame, prediction, rule=None):
@@ -239,7 +339,7 @@ def apply_postprocess(frame, prediction, rule=None):
     return result
 
 
-def predict(features, model_directory="results/stale30-development"):
+def predict(features, model_directory="results/stale30-tenfold-xgboost"):
     """Predict unlabeled snapshot_features rows with the complete saved recipe."""
     output = Path(model_directory)
     config = json.loads((output / "config.json").read_text())
@@ -254,7 +354,8 @@ def predict(features, model_directory="results/stale30-development"):
         raise ValueError("Prediction inputs must come from a 30-minute-old snapshot")
     if (prediction_time < pd.Timestamp(result["deployment_not_before"])).any():
         raise ValueError("Final model was not available at this historical prediction time")
-    for name in ["source_actual_time", "input_latest_actual_time", "input_latest_timetable_time", "focal_timetable_available_time", "service_latest_available_time"]:
+    validate_additional_provenance(frame, config.get("input_manifest", {}), cutoff)
+    for name in ["source_actual_time", "input_latest_actual_time", "input_latest_timetable_time", "focal_timetable_available_time", "service_latest_available_time", "enriched_input_latest_actual_time", "enriched_input_latest_timetable_time", "network_input_latest_actual_time", "network_input_latest_timetable_time"] + config.get("input_manifest", {}).get("additional_provenance_columns", []):
         if name in frame:
             values = pd.to_datetime(frame[name], utc=True)
             valid = values.notna()
@@ -263,8 +364,8 @@ def predict(features, model_directory="results/stale30-development"):
     model = XGBRegressor()
     model.load_model(output / "model.ubj")
     prediction = model.predict(frame[config["features"]].astype(np.float32))
-    if selected["configuration"]["mode"] == "residual":
-        prediction += frame.previous_delay.fillna(0).to_numpy(dtype=np.float32)
+    if selected["configuration"]["mode"] != "direct":
+        prediction += prediction_baseline(frame, selected["configuration"])
     return apply_postprocess(frame, prediction, selected.get("postprocess"))
 
 
@@ -279,7 +380,7 @@ def calibration_scores(frame, row_ids, fold_ids, prediction_matrix, configuratio
                     rule = {"nohistory_departure_cap": cap, "pending_floor_threshold": threshold,
                             "pending_floor_multiplier": multiplier}
                     prediction = apply_postprocess(lookup, prediction_matrix[index], rule)
-                    losses = [metrics(lookup.loc[fold_ids == i, TARGET], prediction[fold_ids == i])["rmse"] for i in range(1, 6)]
+                    losses = [metrics(lookup.loc[fold_ids == i, TARGET], prediction[fold_ids == i])["rmse"] for i in np.unique(fold_ids)]
                     records.append({"candidate": index+1, "configuration": choice, "postprocess": rule,
                                     "fold_rmse": losses, "mean_cv_rmse": float(np.mean(losses))})
     return sorted(records, key=lambda record: record["mean_cv_rmse"])
@@ -290,15 +391,18 @@ def train(args):
     manifest = json.loads(Path(args.data).with_suffix(".manifest.json").read_text())
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
-    folds = folds_for(frame)
-    calibrated = getattr(args, "search_profile", "base") == "calibrated"
+    folds = folds_for(frame, getattr(args, "folds", 10))
+    profile = getattr(args, "search_profile", "base")
+    calibrated = profile == "calibrated"
     configurations = calibrated_candidates() if calibrated else [{"mode": mode, "parameters": p} for mode in ["direct", "residual"] for p in candidates()]
-    names = MODEL_FEATURES + SERVICE_FEATURES if getattr(args, "feature_profile", "base") == "service" else MODEL_FEATURES
+    names = manifest["features"] if getattr(args, "feature_profile", "base") in {"enriched", "network"} else MODEL_FEATURES + SERVICE_FEATURES if getattr(args, "feature_profile", "base") == "service" else MODEL_FEATURES
     config = {"features": names, "data_sha256": sha256(args.data), "input_manifest": manifest,
               "configurations": configurations, "minimum_input_age_minutes": 30., "holdout_used": False,
-              "selection": "minimum arithmetic mean of five chronological fold RMSEs",
+              "selection": f"minimum arithmetic mean of {len(folds)} chronological fold RMSEs",
+              "folds": len(folds), "fold_order": "prediction_time; simultaneous predictions kept together",
+              "target_rmse": getattr(args, "target_rmse", 8.),
               "jobs": args.jobs, "workers": args.workers,
-              "search_profile": "calibrated" if calibrated else "base",
+              "search_profile": profile,
               "versions": {"python": platform.python_version(), "xgboost": xgboost.__version__, "numpy": np.__version__, "pandas": pd.__version__}}
     destination = output / "config.json"
     if destination.exists() and json.loads(destination.read_text()) != config:
@@ -321,9 +425,10 @@ def train(args):
     records = [json.loads(line) for line in checkpoint.read_text().splitlines()] if checkpoint.exists() else []
     def score(index):
         choice, losses, parts = configurations[index], [], []
-        residual = choice["mode"] == "residual"
+        residual = choice["mode"] != "direct"
+        base = prediction_baseline(frame, choice)
         for tr, va in folds:
-            model = estimator(choice["parameters"], args.jobs).fit(X.iloc[tr], y[tr] - base[tr] if residual else y[tr])
+            model = fit_estimator(choice, X.iloc[tr], y[tr] - base[tr] if residual else y[tr], args.jobs)
             prediction = model.predict(X.iloc[va]) + (base[va] if residual else 0)
             losses.append(metrics(y[va], prediction)["rmse"])
             if calibrated:
@@ -351,10 +456,11 @@ def train(args):
     else:
         selected = min(records, key=lambda record: record["mean_cv_rmse"])
     (output / "selection.json").write_text(json.dumps(selected, indent=2))
-    residual = selected["configuration"]["mode"] == "residual"
+    residual = selected["configuration"]["mode"] != "direct"
+    base = prediction_baseline(frame, selected["configuration"])
     predictions = []
     for i, (tr, va) in enumerate(folds, 1):
-        model = estimator(selected["configuration"]["parameters"], args.jobs).fit(X.iloc[tr], y[tr] - base[tr] if residual else y[tr])
+        model = fit_estimator(selected["configuration"], X.iloc[tr], y[tr] - base[tr] if residual else y[tr], args.jobs)
         model.save_model(output / f"fold_{i}.ubj")
         part = frame.iloc[va][["row_id", "event_time", "prediction_time", "observation_cutoff", TARGET]].copy()
         raw_prediction = model.predict(X.iloc[va]) + (base[va] if residual else 0)
@@ -363,13 +469,16 @@ def train(args):
         part["fold"] = i
         part["persistence_prediction"] = base[va]
         predictions.append(part)
-    pd.concat(predictions).to_parquet(output / "cv_predictions.parquet", index=False)
-    model = estimator(selected["configuration"]["parameters"], args.jobs).fit(X, y - base if residual else y)
+    cv = pd.concat(predictions)
+    cv.to_parquet(output / "cv_predictions.parquet", index=False)
+    pd.DataFrame([dict(fold=i, rows=len(part), **metrics(part[TARGET], part.prediction))
+                  for i, part in cv.groupby("fold")]).to_csv(output / "cv_metrics.csv", index=False)
+    model = fit_estimator(selected["configuration"], X, y - base if residual else y, args.jobs)
     model.save_model(output / "model.ubj")
     pd.DataFrame({"feature": names, "importance": model.feature_importances_}).sort_values("importance", ascending=False).to_csv(output / "feature_importance.csv", index=False)
     result = {"model": "stale-30-minute-operational-xgboost", "mean_cv_rmse": selected["mean_cv_rmse"],
-              "fold_rmse": selected["fold_rmse"], "target_rmse": 9., "target_met": selected["mean_cv_rmse"] <= 9,
-              "development_rows": len(frame), "minimum_input_age_minutes": 30., "holdout_used": False,
+              "fold_rmse": selected["fold_rmse"], "target_rmse": config["target_rmse"], "target_met": selected["mean_cv_rmse"] <= config["target_rmse"],
+              "development_rows": len(frame), "folds": len(folds), "minimum_input_age_minutes": 30., "holdout_used": False,
               "model_sha256": sha256(output / "model.ubj"), "selection": selected,
               "deployment_not_before": str(pd.to_datetime(frame.event_time, utc=True).max() + pd.Timedelta(minutes=30))}
     (output / "result.json").write_text(json.dumps(result, indent=2))
@@ -380,6 +489,8 @@ def verify(args):
     frame = load_data(args.data)
     output = Path(args.output)
     config, result = [json.loads((output / name).read_text()) for name in ["config.json", "result.json"]]
+    if config.get("holdout_used") or result.get("holdout_used"):
+        raise ValueError("This verifier only accepts development-only models")
     if config["data_sha256"] != sha256(args.data) or result["model_sha256"] != sha256(output / "model.ubj"):
         raise ValueError("Artifact hash differs")
     records = [json.loads(line) for line in (output / "search.jsonl").read_text().splitlines()]
@@ -395,11 +506,17 @@ def verify(args):
     if len(records) != len(config["configurations"]) or result["selection"] != expected:
         raise ValueError("Development model selection is inconsistent")
     saved = pd.read_parquet(output / "cv_predictions.parquet")
+    if sorted(saved.fold.unique()) != list(range(1, config.get("folds", 5) + 1)):
+        raise ValueError("CV fold membership is incomplete")
+    if saved.row_id.duplicated().any():
+        raise ValueError("CV events must be unique")
+    if config["input_manifest"]["features_sha256"] != config["data_sha256"]:
+        raise ValueError("Input manifest does not identify the prepared data")
     X = frame[config["features"]].astype(np.float32)
-    base = frame.previous_delay.fillna(0).to_numpy(dtype=np.float32)
-    residual = result["selection"]["configuration"]["mode"] == "residual"
+    base = prediction_baseline(frame, result["selection"]["configuration"])
+    residual = result["selection"]["configuration"]["mode"] != "direct"
     scores = []
-    for i, (tr, va) in enumerate(folds_for(frame), 1):
+    for i, (tr, va) in enumerate(folds_for(frame, config.get("folds", 5)), 1):
         model = XGBRegressor()
         model.load_model(output / f"fold_{i}.ubj")
         prediction = model.predict(X.iloc[va]) + (base[va] if residual else 0)
@@ -408,7 +525,8 @@ def verify(args):
         np.testing.assert_array_equal(part.row_id, frame.iloc[va].row_id)
         np.testing.assert_array_equal(part[TARGET], frame.iloc[va][TARGET])
         np.testing.assert_array_equal(part.prediction, prediction)
-        assert frame.iloc[tr].event_time.max() < frame.iloc[va].observation_cutoff.min()
+        assert pd.to_datetime(frame.iloc[tr].event_time, utc=True).max() < pd.to_datetime(frame.iloc[va].observation_cutoff, utc=True).min()
+        assert frame.iloc[tr].prediction_time.max() < frame.iloc[va].prediction_time.min()
         scores.append(metrics(part[TARGET], prediction)["rmse"])
     np.testing.assert_allclose(scores, result["fold_rmse"], rtol=1e-12)
     np.testing.assert_allclose(np.mean(scores), result["mean_cv_rmse"], rtol=1e-12)
@@ -428,6 +546,7 @@ def main():
     prep.add_argument("--archive", default="data_archive")
     prep.add_argument("--cohort", default="data/oulu_features.parquet")
     prep.add_argument("--output", default="data/oulu_stale30_development.parquet")
+    prep.add_argument("--feature-profile", choices=["base", "enriched", "network"], default="base")
     prep.set_defaults(function=prepare)
     augmentation = subcommands.add_parser("augment")
     augmentation.add_argument("--data", default="data/oulu_stale30_development.parquet")
@@ -436,11 +555,13 @@ def main():
     for name, function in [("train", train), ("verify", verify)]:
         sub = subcommands.add_parser(name)
         sub.add_argument("--data", default="data/oulu_stale30_development.parquet")
-        sub.add_argument("--output", default="results/stale30-development")
+        sub.add_argument("--output", default="results/stale30-tenfold-xgboost")
         sub.add_argument("--jobs", type=int, default=2)
         sub.add_argument("--workers", type=int, default=3)
+        sub.add_argument("--folds", type=int, default=10)
+        sub.add_argument("--target-rmse", type=float, default=8.)
         if name == "train":
-            sub.add_argument("--feature-profile", choices=["base", "service"], default="base")
+            sub.add_argument("--feature-profile", choices=["base", "service", "enriched", "network"], default="base")
             sub.add_argument("--search-profile", choices=["base", "calibrated"], default="base")
         sub.set_defaults(function=function)
     args = parser.parse_args()

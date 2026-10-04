@@ -1,0 +1,3 @@
+# Optional additional families for the final thirty-minute model.
+catboost==1.2.10
+lightgbm==4.7.0

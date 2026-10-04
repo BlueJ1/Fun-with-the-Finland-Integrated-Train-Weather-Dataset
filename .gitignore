@@ -11,3 +11,10 @@ __pycache__/
 /references/paper.txt
 /references/author/c28b188948fe42ccc0da2c0f84a81405cc1e2a72/*.py
 /references/author/xgboost-v3.0.1/
+
+# Regenerable stale-input model outputs stay local.
+/results/stale30-*/
+!/results/stale30-tenfold-policy-model-v4/
+/results/stale30-tenfold-policy-model-v4/*
+!/results/stale30-tenfold-policy-model-v4/REPORT.md
+!/results/stale30-tenfold-policy-model-v4/summary.json

@@ -321,9 +321,13 @@ class PolicyNativeIntegrationTests(unittest.TestCase):
             import shutil
             shutil.rmtree(exploration)
             output = directory/"native"
+            output.mkdir()
+            tracked = {"REPORT.md":"Tracked model report", "summary.json":'{"passed": true}'}
+            for name,content in tracked.items():(output/name).write_text(content)
             args = SimpleNamespace(recipe=recipe,data_directory=data,output=output,threads=1)
             with patch.object(native,"_fit",wraps=native._fit) as fit,contextlib.redirect_stdout(io.StringIO()):
                 policy.train(args);policy.verify(args)
+            for name,content in tracked.items():self.assertEqual((output/name).read_text(),content)
             self.assertEqual(fit.call_count,33)
             verified = json.loads((output/"verification.json").read_text())
             self.assertTrue(verified["passed"])
@@ -336,6 +340,24 @@ class PolicyNativeIntegrationTests(unittest.TestCase):
             with (output/"reproduction_recipe.json").open("a") as saved:saved.write(" ")
             with self.assertRaisesRegex(ValueError,"recipe hash"):
                 policy._artifact(output)
+
+    def test_training_preserves_existing_artifacts_and_rejects_directories_named_as_reports(self):
+        with tempfile.TemporaryDirectory() as temporary,patch.object(stale,"DEVELOPMENT_ROWS",132):
+            directory = Path(temporary)
+            exploration,data,path,frame = integration_exploration(directory)
+            recipe = directory/"recipe.json";recipe.write_text(json.dumps(compact_recipe(exploration)))
+            for name,is_directory in [("config.json",False),("component_1",True),("REPORT.md",True)]:
+                output = directory/f"native_{name}";output.mkdir()
+                existing = output/name
+                if is_directory:existing.mkdir()
+                else:existing.write_text("Existing model metadata")
+                args = SimpleNamespace(recipe=recipe,data_directory=data,output=output,threads=1)
+                with patch.object(native,"_fit",wraps=native._fit) as fit:
+                    with self.assertRaisesRegex(ValueError,"artifact directory"):
+                        policy.train(args)
+                    self.assertEqual(fit.call_count,0)
+                self.assertEqual(set(output.iterdir()),{existing})
+                if not is_directory:self.assertEqual(existing.read_text(),"Existing model metadata")
 
     def test_compact_recipe_rejects_inventory_manifest_and_policy_changes_before_fitting(self):
         with tempfile.TemporaryDirectory() as temporary,patch.object(stale,"DEVELOPMENT_ROWS",132):

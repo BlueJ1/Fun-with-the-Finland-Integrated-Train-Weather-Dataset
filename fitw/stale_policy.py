@@ -436,8 +436,10 @@ def train(args):
     recipe_records = None
     if recipe_path:
         selected, catalog, recipe_definition, recipe_records = _load_recipe(recipe_path, args.data_directory)
-    if output.exists() and any(output.iterdir()):
-        raise ValueError("Use a fresh empty policy artifact directory")
+    if output.exists() and (not output.is_dir() or any(
+            path.name not in {"REPORT.md", "summary.json"} or not path.is_file()
+            for path in output.iterdir())):
+        raise ValueError("Use an empty artifact directory or one containing only REPORT.md and summary.json")
     output.mkdir(parents=True, exist_ok=True)
     frozen = output/"exploration"
     frozen.mkdir()

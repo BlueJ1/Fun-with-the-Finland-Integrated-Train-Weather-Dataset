@@ -25,6 +25,6 @@
   "development_rows": 80916,
   "minimum_input_age_minutes": 30,
   "artifacts_stored_locally": true,
-  "tests_passed": 140,
+  "tests_passed": 141,
   "compact_recipe_replay_checked": true
 }

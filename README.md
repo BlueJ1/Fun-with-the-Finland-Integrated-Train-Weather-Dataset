@@ -1,18 +1,31 @@
 # FI-TW delay modeling
 
-## Current model with thirty-minute-old inputs
+## Thirty-minute delay model
 
-The rebuilt model achieves **8.977 minutes mean chronological CV RMSE** using input snapshots more than 30 minutes old at the scheduled prediction time. It uses only the original 80,916 development events; the holdout is unused for this rebuild. Fold RMSE values are 9.413, 7.445, 8.309, 10.464, and 9.252. All 49 tests pass, and saved fold models reproduce every CV prediction exactly.
+The final model achieves **7.999978167823421 minutes mean chronological CV RMSE across ten folds**, retaining all 80,916 development events and 73,560 OOF predictions. No holdout was used. The margin below eight minutes is only 0.00131 seconds. Extensive CV tuning makes this a selection score, with no independent generalization estimate. [The final report](results/stale30-tenfold-policy-model-v4/REPORT.md) records the weights, policy, fold scores and inference contract.
 
-The age cutoff applies to observed history, station context, pending status, timetable acceptance, and training-label availability. Nine events with too-recent timetable metadata remain in the cohort with masked predictors. The selected prediction recipe combines XGBoost with CV-tuned rules for missing reports and prolonged unresolved delays. This is a selected CV score; no new holdout score is reported.
+Predictions occur at scheduled event time. Observations and accepted timetable metadata must strictly precede prediction time minus thirty minutes. Folds follow prediction time, keep simultaneous queries together, and purge training labels after the earliest validation snapshot. Earlier outcomes can supply online history for later queries once they satisfy the age rule. `actualTime` and archived timetable acceptance are availability proxies. FMI measurements have an additional assumed sixty-minute publication lag; historical publication and revision times are uncertified.
+
+Separate arrival and departure mixtures use 25 distinct XGBoost, CatBoost, LightGBM, ridge and neural sources, followed by a shared policy using old delay, station context and pending-report controls. The tracked recipe in `models/stale30_policy.json` records the 25 source configurations, selected expert weights, policy parameters and input hashes. Fitted weights, prediction arrays, expanded manifests and generated metadata stay local under gitignored result directories. The PR retains a small final report and score summary. Original archives and prepared snapshots also remain outside Git.
+
+Install the main pinned dependencies from `requirements-lock.txt` and optional backends from `requirements-models.txt`. Training requires the exact manifest-bound development snapshots in `data/`. The preparation commands are in the final report. After training, verify the generated local bundle:
 
 ```sh
-.venv/bin/python -m fitw.stale prepare --archive data_archive
-.venv/bin/python -m fitw.stale train --search-profile calibrated
-.venv/bin/python -m fitw.stale verify
+.venv/bin/python -m fitw.stale_policy verify \
+  --data-directory data --output results/stale30-tenfold-policy-model-v4
 ```
 
-Read [the thirty-minute model report](results/stale30-development/REPORT.md) for the age audit, search scope, inference helper, limitations, and full reproduction commands. Existing experiments below remain available.
+`fitw.stale_policy.predict(profiles)` accepts separate unlabeled feature frames keyed by the eight snapshot filenames, plus an explicit `policy_context` frame. It defaults to the final bundle. Shared column names can have different values across profiles; each frame must preserve the same ordered query identities and validated availability/count provenance. See the report for the required keys. Feature builders retain the intermediate profiles needed to reconstruct these snapshots.
+
+On a fresh checkout, regenerate the default model from the compact tracked recipe:
+
+```sh
+.venv/bin/python -m fitw.stale_policy train \
+  --recipe models/stale30_policy.json \
+  --data-directory data --output results/stale30-tenfold-policy-model-v4
+```
+
+If that local bundle already exists, select an empty output such as `results/stale30-final-reproduction` and use the same directory for verification and inference.
 
 ## Earlier operational model
 

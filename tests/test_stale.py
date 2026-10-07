@@ -157,6 +157,9 @@ class StaleSnapshotTests(unittest.TestCase):
                 ("input_latest_timetable_time", pd.Timestamp(time(12, 30))),
                 ("focal_timetable_available_time", pd.Timestamp(time(12, 45))),
                 ("source_train_number", 99),
+                ("enriched_input_latest_actual_time", pd.Timestamp(time(12, 40))),
+                ("network_input_latest_actual_time", pd.Timestamp(time(12, 40))),
+                ("network_input_latest_timetable_time", pd.Timestamp(time(12, 40))),
             ]
             for field, value in changes:
                 with self.subTest(field=field):
@@ -166,8 +169,73 @@ class StaleSnapshotTests(unittest.TestCase):
                     with self.assertRaises(ValueError):
                         stale.load_data(path)
 
+    def test_loader_orders_predictions_independently_of_outcome_order(self):
+        frame = pd.concat([self.prepared(), self.prepared()], ignore_index=True)
+        # The earlier scheduled train finishes after the later scheduled train.
+        # Cohort row IDs preserve outcome order, not prediction order.
+        frame["row_id"] = [1, 0]
+        frame["scheduledTime"] = pd.to_datetime([time(13), time(14)], utc=True)
+        frame["prediction_time"] = frame.scheduledTime
+        frame["observation_cutoff"] = frame.prediction_time - pd.Timedelta(minutes=30)
+        frame["prediction_cutoff"] = frame.observation_cutoff
+        frame["event_time"] = pd.to_datetime([time(15), time(14, 5)], utc=True)
+        frame[TARGET] = [120., 5.]
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "synthetic_predictions.parquet"
+            frame.iloc[::-1].to_parquet(path, index=False)
+            loaded = stale.load_data(path)
+        self.assertEqual(loaded.row_id.tolist(), [1, 0])
+        self.assertTrue(loaded.prediction_time.is_monotonic_increasing)
+        self.assertFalse(loaded.event_time.is_monotonic_increasing)
+
 
 class StaleProtocolTests(unittest.TestCase):
+    def test_assumed_availability_lag_is_enforced_before_snapshot(self):
+        cutoff = pd.Series(pd.to_datetime([time(12,30)],utc=True))
+        frame = pd.DataFrame({"weather_time":pd.to_datetime([time(11,29)],utc=True),"weather_count":[1.]})
+        manifest = {"additional_provenance_columns":["weather_time"],
+                    "provenance_count_columns":{"weather_time":["weather_count"]},
+                    "additional_provenance_lag_minutes":{"weather_time":60.}}
+        stale.validate_additional_provenance(frame,manifest,cutoff)
+        for value in [time(11,30),time(12)]:
+            changed = frame.copy()
+            changed["weather_time"] = pd.to_datetime([value],utc=True)
+            with self.assertRaisesRegex(ValueError,"Input age violation"):
+                stale.validate_additional_provenance(changed,manifest,cutoff)
+        for lag in [-1.,float("nan"),float("inf")]:
+            manifest["additional_provenance_lag_minutes"]["weather_time"] = lag
+            with self.assertRaisesRegex(ValueError,"Invalid additional availability lag"):
+                stale.validate_additional_provenance(frame,manifest,cutoff)
+
+    def test_declared_history_provenance_checks_all_timestamps_and_presence_counts(self):
+        cutoff = pd.Series(pd.to_datetime([time(12,30)]*3,utc=True),index=[17,31,45])
+        frame = pd.DataFrame({"recent_history_count":[2.,0.,np.nan],
+                              "recent_history_time":pd.to_datetime([time(12,20),None,None],utc=True)},index=cutoff.index)
+        manifest = {"additional_provenance_columns":["recent_history_time"],
+                    "provenance_count_columns":{"recent_history_time":["recent_history_count"]}}
+        stale.validate_additional_provenance(frame,manifest,cutoff)
+        changed = frame.copy()
+        changed.loc[17,"recent_history_time"] = pd.NaT
+        with self.assertRaisesRegex(ValueError,"Present observations"):
+            stale.validate_additional_provenance(changed,manifest,cutoff)
+        changed = frame.copy()
+        changed.loc[31,"recent_history_time"] = pd.Timestamp(time(12,30))
+        # An at-cutoff timestamp is forbidden even when its count says zero.
+        with self.assertRaisesRegex(ValueError,"Input age violation"):
+            stale.validate_additional_provenance(changed,manifest,cutoff)
+        with self.assertRaisesRegex(ValueError,"Missing additional timestamp"):
+            stale.validate_additional_provenance(frame.drop(columns="recent_history_time"),manifest,cutoff)
+        with self.assertRaisesRegex(ValueError,"Missing provenance presence counts"):
+            stale.validate_additional_provenance(frame.drop(columns="recent_history_count"),manifest,cutoff)
+
+    def test_provenance_presence_mapping_cannot_bypass_a_timestamp_declaration(self):
+        frame = pd.DataFrame({"recent_history_count":[1.],
+                              "recent_history_time":pd.to_datetime([time(12,45)],utc=True)})
+        cutoff = pd.Series(pd.to_datetime([time(12,30)],utc=True))
+        manifest = {"provenance_count_columns":{"recent_history_time":["recent_history_count"]}}
+        with self.assertRaisesRegex(ValueError,"undeclared timestamp"):
+            stale.validate_additional_provenance(frame,manifest,cutoff)
+
     def test_development_filter_is_applied_in_parquet_io(self):
         table = pa.Table.from_pandas(pd.DataFrame({"row_id": [0, 80915, 80916, 99999]}))
         with tempfile.TemporaryDirectory() as temp:
@@ -178,7 +246,7 @@ class StaleProtocolTests(unittest.TestCase):
             self.assertEqual(reader.call_args.kwargs["filters"], [("row_id", "<", 80916)])
             self.assertEqual(selected.row_id.tolist(), [0, 80915])
 
-    def test_all_five_folds_purge_labels_newer_than_oldest_validation_snapshot(self):
+    def test_all_ten_folds_purge_labels_newer_than_oldest_validation_snapshot(self):
         frame = pd.DataFrame({
             "event_time": pd.date_range("2020-01-01", periods=120, freq="h", tz="UTC"),
         })
@@ -186,12 +254,74 @@ class StaleProtocolTests(unittest.TestCase):
         frame["observation_cutoff"] = frame.prediction_time - pd.Timedelta(minutes=30)
         frame["prediction_cutoff"] = frame.observation_cutoff
         folds = stale.folds_for(frame)
-        self.assertEqual(len(folds), 5)
+        self.assertEqual(len(folds), 10)
         for tr, va in folds:
             self.assertLess(frame.iloc[tr].event_time.max(), frame.iloc[va].observation_cutoff.min())
             self.assertLess(len(tr), va.min())
             self.assertGreaterEqual((frame.iloc[va].prediction_time - frame.iloc[va].observation_cutoff).min(),
                                     pd.Timedelta(minutes=30))
+
+    def test_delayed_training_outcome_is_purged_without_reordering_predictions(self):
+        frame = pd.DataFrame({
+            "prediction_time": pd.date_range("2020-01-01", periods=132, freq="h", tz="UTC"),
+        })
+        frame["event_time"] = frame.prediction_time + pd.Timedelta(minutes=5)
+        frame.loc[2, "event_time"] += pd.Timedelta(hours=35)
+        frame["observation_cutoff"] = frame.prediction_time - pd.Timedelta(minutes=30)
+        frame["prediction_cutoff"] = frame.observation_cutoff
+        self.assertFalse(frame.event_time.is_monotonic_increasing)
+        folds = stale.folds_for(frame)
+        self.assertEqual(len(folds), 10)
+        self.assertNotIn(2, folds[0][0])
+        self.assertIn(2, folds[-1][0])
+        for tr, va in folds:
+            self.assertLess(frame.iloc[tr].prediction_time.max(), frame.iloc[va].prediction_time.min())
+            self.assertLess(frame.iloc[tr].event_time.max(), frame.iloc[va].observation_cutoff.min())
+
+    def test_simultaneous_predictions_stay_in_one_validation_block(self):
+        # Nominal row boundaries fall inside groups of four simultaneous events.
+        predictions = pd.date_range("2020-01-01", periods=35, freq="h", tz="UTC").repeat(4)[:138]
+        frame = pd.DataFrame({"prediction_time": predictions})
+        frame["event_time"] = frame.prediction_time + pd.Timedelta(minutes=5)
+        frame["observation_cutoff"] = frame.prediction_time - pd.Timedelta(minutes=30)
+        frame["prediction_cutoff"] = frame.observation_cutoff
+        folds = stale.folds_for(frame)
+        self.assertEqual(len(folds), 10)
+        validated = np.concatenate([va for _, va in folds])
+        np.testing.assert_array_equal(validated, np.arange(validated.min(), len(frame)))
+        self.assertEqual(len(validated), len(np.unique(validated)))
+        memberships = {}
+        for fold_id, (tr, va) in enumerate(folds):
+            self.assertLess(frame.iloc[tr].prediction_time.max(), frame.iloc[va].prediction_time.min())
+            self.assertLess(frame.iloc[tr].event_time.max(), frame.iloc[va].observation_cutoff.min())
+            for stamp in frame.iloc[va].prediction_time.unique():
+                self.assertNotIn(stamp, memberships)
+                memberships[stamp] = fold_id
+                expected = np.flatnonzero((frame.prediction_time == stamp).to_numpy())
+                np.testing.assert_array_equal(va[(frame.iloc[va].prediction_time == stamp).to_numpy()], expected)
+
+    def test_folds_reject_prediction_order_that_only_follows_outcomes(self):
+        frame = pd.DataFrame({
+            "prediction_time": pd.date_range("2020-01-01", periods=120, freq="h", tz="UTC"),
+        })
+        frame["event_time"] = frame.prediction_time + pd.Timedelta(minutes=5)
+        frame["prediction_cutoff"] = frame.prediction_time - pd.Timedelta(minutes=30)
+        frame.loc[[2, 3], "prediction_time"] = frame.loc[[3, 2], "prediction_time"].to_numpy()
+        self.assertTrue(frame.event_time.is_monotonic_increasing)
+        with self.assertRaisesRegex(ValueError, "chronological prediction times"):
+            stale.folds_for(frame)
+
+    def test_calibration_uses_arithmetic_mean_of_all_ten_fold_rmses(self):
+        # Unequal block sizes distinguish mean fold RMSE from pooled RMSE.
+        fold_ids = np.repeat(np.arange(1, 11), np.arange(2, 12))
+        frame = pd.DataFrame({"row_id": np.arange(len(fold_ids)), TARGET: np.zeros(len(fold_ids)),
+                              "history_count": 1, "is_departure": 0., "oldest_pending_minutes": 0.})
+        matrix = fold_ids.astype(float)[None, :]
+        configurations = [{"mode": "direct", "parameters": {}}]
+        records = stale.calibration_scores(frame, frame.row_id.to_numpy(), fold_ids, matrix, configurations)
+        for record in records:
+            np.testing.assert_allclose(record["fold_rmse"], np.arange(1., 11.))
+            self.assertEqual(record["mean_cv_rmse"], 5.5)
 
 
 class StaleServiceHistoryTests(unittest.TestCase):
@@ -285,6 +415,18 @@ class StalePostprocessTests(unittest.TestCase):
         raw = np.array([50., 50., 50., 100., 50.])
         np.testing.assert_array_equal(stale.apply_postprocess(frame, raw, self.rule),
                                       [50., 50., 451.5, 100., 50.])
+
+    def test_pending_reference_is_snapshot_only_and_preserves_signed_input(self):
+        frame = pd.DataFrame({"previous_delay": np.array([-1., 5., 140., -2.], dtype=np.float32),
+                              "history_count": [1, 1, 1, 0],
+                              "oldest_pending_minutes": [61., 130., 150., 160.],
+                              TARGET: [1000., -1000., 1e9, -1e9]})
+        original = frame.copy(deep=True)
+        choice = {"mode": "pending_residual", "baseline": {"threshold": 60., "multiplier": 1.}}
+        np.testing.assert_array_equal(stale.prediction_baseline(frame, choice), [61., 130., 150., -2.])
+        pd.testing.assert_frame_equal(frame, original)
+        np.testing.assert_array_equal(stale.prediction_baseline(frame.drop(columns=TARGET), choice),
+                                      [61., 130., 150., -2.])
 
     def test_forward_helper_applies_saved_rule_and_rejects_recent_or_unavailable_inputs(self):
         frame = pd.DataFrame({"history_count": [0], "is_departure": [1.],
